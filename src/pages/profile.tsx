@@ -75,7 +75,7 @@ const AuthorProfilePage: NextPageWithLayout<
   );
 };
 
-AuthorProfilePage.getLayout = function getLayout(page) {
+AuthorProfilePage.getLayout = function getLayout(page: React.ReactNode) {
   return <RootLayout>{page}</RootLayout>;
 };
 

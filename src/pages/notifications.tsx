@@ -124,7 +124,7 @@ const NotificationPage: NextPageWithLayout = () => {
   );
 };
 
-NotificationPage.getLayout = function getLayout(page) {
+NotificationPage.getLayout = function getLayout(page: React.ReactNode) {
   return <RootLayout>{page}</RootLayout>;
 };
 

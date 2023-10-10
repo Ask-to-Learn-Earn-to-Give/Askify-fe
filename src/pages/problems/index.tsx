@@ -175,7 +175,7 @@ const ProposalsPage: NextPageWithLayout = () => {
   );
 };
 
-ProposalsPage.getLayout = function getLayout(page) {
+ProposalsPage.getLayout = function getLayout(page: React.ReactNode) {
   return <RootLayout>{page}</RootLayout>;
 };
 
