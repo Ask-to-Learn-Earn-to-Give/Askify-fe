@@ -842,12 +842,3 @@ export const AskifyVotes = [
     ],
   },
 ];
-
-// getVotesByStatus
-export function getVotesByStatus(status: string) {
-  const votesByStatus = AskifyVotes.filter((vote) => vote.status === status);
-  return {
-    votes: votesByStatus,
-    totalVote: votesByStatus.length,
-  };
-}

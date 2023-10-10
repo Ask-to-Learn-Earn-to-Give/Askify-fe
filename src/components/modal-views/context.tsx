@@ -7,6 +7,7 @@ export type MODAL_VIEW =
   | 'PROFILE_INFO_VIEW'
   | 'FOLLOWING_VIEW'
   | 'FOLLOWERS_VIEW'
+  | 'BID_PRICE'
   | 'NFT_PREVIEW';
 
 interface ModalTypes {

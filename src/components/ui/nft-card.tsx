@@ -37,13 +37,13 @@ export default function NFTGrid({
           <span className="overflow-hidden text-ellipsis">@{author}</span>
         </AnchorLink>
       </div>
-      <AnchorLink href="/nft-details" className="relative block w-full">
+      <AnchorLink href="/nft/nft-details" className="relative block w-full">
         <Image src={image} placeholder="blur" width={450} height={450} alt="" />
       </AnchorLink>
 
       <div className="p-5">
         <AnchorLink
-          href="/nft-details"
+          href="/nft/nft-details"
           className="text-sm font-medium text-black dark:text-white"
         >
           {name}

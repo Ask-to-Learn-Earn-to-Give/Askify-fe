@@ -1,17 +1,30 @@
 import { motion, LayoutGroup } from 'framer-motion';
-import VoteDetailsCard from '@/components/vote/vote-details/vote-details-card';
+import PropblemDetailCard from '@/components/vote/vote-details/problem-details-card';
 import { ExportIcon } from '@/components/icons/export-icon';
 // static data
-import { getVotesByStatus } from '@/data/static/vote-data';
+import { AskifyVotes } from '@/data/static/problems-data';
 
 export default function VoteList({ voteStatus }: { voteStatus: string }) {
-  const { votes, totalVote } = getVotesByStatus(voteStatus);
+  // getProblemsByStatus
+  function getProblemsByStatus(status: string) {
+    const votesByStatus = AskifyVotes.filter((vote) => vote.status === status);
+    return {
+      problems: votesByStatus,
+      totalProblems: votesByStatus.length,
+    };
+  }
+
+  const { problems, totalProblems } = getProblemsByStatus(voteStatus);
+
   return (
     <LayoutGroup>
       <motion.div layout initial={{ borderRadius: 16 }} className="rounded-2xl">
-        {totalVote > 0 ? (
-          votes.map((vote: any) => (
-            <VoteDetailsCard key={`${vote.title}-key-${vote.id}`} vote={vote} />
+        {totalProblems > 0 ? (
+          problems.map((prob: any) => (
+            <PropblemDetailCard
+              key={`${prob.title}-key-${prob.id}`}
+              prob={prob}
+            />
           ))
         ) : (
           <div className="flex flex-col items-center justify-center rounded-lg bg-white px-4 py-16 text-center shadow-card dark:bg-light-dark xs:px-6 md:px-5 md:py-24">
@@ -33,7 +46,7 @@ export default function VoteList({ voteStatus }: { voteStatus: string }) {
               </svg>
             </div>
             <h2 className="mb-3 text-base font-medium leading-relaxed dark:text-gray-100 md:text-lg xl:text-xl">
-              There are no proposals at the moment
+              There are no Problems at the moment
             </h2>
             <p className="leading-relaxed text-gray-600 dark:text-gray-400">
               Discuss ideas you have on{' '}

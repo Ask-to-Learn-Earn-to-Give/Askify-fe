@@ -11,7 +11,8 @@ import { useBreakpoint } from '@/lib/hooks/use-breakpoint';
 import { useDrawer } from '@/components/drawer-views/context';
 import { useWindowScroll } from '@/lib/hooks/use-window-scroll';
 import routes from '@/config/routes';
-
+import FooterSmall from '@/components/Footers/FooterSmall';
+import footerSmall from '@/data/static/Footer/footersmall';
 function NotificationButton() {
   return (
     <ActiveLink href={routes.notification}>
@@ -105,6 +106,7 @@ export default function MinimalLayout({
           {children}
         </main>
       </div>
+      <FooterSmall {...footerSmall} />
     </>
   );
 }
