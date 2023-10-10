@@ -1,7 +1,8 @@
 import cn from 'classnames';
 import Header from '@/layouts/header/header';
 import Sidebar from '@/layouts/sidebar/_expandable';
-
+import FooterSmall from '@/components/Footers/FooterSmall';
+import footerSmall from '@/data/static/Footer/footersmall';
 export default function ClassicLayout({
   children,
   contentClassName,
@@ -12,12 +13,13 @@ export default function ClassicLayout({
       <Sidebar className="hidden xl:block" />
       <main
         className={cn(
-          'min-h-screen px-4 pt-4 pb-16 sm:px-6 sm:pb-20 lg:px-8 xl:pb-24 xl:pt-5 3xl:px-10',
+          'min-h-screen px-4 pb-16 pt-4 sm:px-6 sm:pb-20 lg:px-8 xl:pb-24 xl:pt-5 3xl:px-10',
           contentClassName
         )}
       >
         {children}
       </main>
+      <FooterSmall {...footerSmall} />
     </div>
   );
 }

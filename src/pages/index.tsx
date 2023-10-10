@@ -39,7 +39,7 @@ const HomePage: NextPageWithLayout<
   return <ModernScreen />;
 };
 
-HomePage.getLayout = function getLayout(page) {
+HomePage.getLayout = function getLayout(page: React.ReactNode) {
   return (
     <RootLayout>
       {page}

@@ -33,7 +33,7 @@ const VotePage: NextPageWithLayout = () => {
           <motion.div
             whileTap={{ scale: 0.98 }}
             whileHover={{ scale: 1.015 }}
-            onClick={() => router.push(routes.proposals)}
+            onClick={() => router.push(routes.problems)}
             className={cn(
               'flex cursor-pointer flex-col items-center justify-center rounded-lg bg-white p-6 text-center shadow-card transition-shadow duration-200 hover:shadow-large dark:bg-light-dark',
               {
@@ -144,7 +144,7 @@ const VotePage: NextPageWithLayout = () => {
   );
 };
 
-VotePage.getLayout = function getLayout(page) {
+VotePage.getLayout = function getLayout(page: React.ReactNode) {
   return <RootLayout>{page}</RootLayout>;
 };
 

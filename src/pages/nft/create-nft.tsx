@@ -26,7 +26,7 @@ const CreateNFTPage: NextPageWithLayout = () => {
   );
 };
 
-CreateNFTPage.getLayout = function getLayout(page) {
+CreateNFTPage.getLayout = function getLayout(page: React.ReactNode) {
   return <RootLayout>{page}</RootLayout>;
 };
 

@@ -41,7 +41,7 @@ const NFTDetailsPage: NextPageWithLayout<
   );
 };
 
-NFTDetailsPage.getLayout = function getLayout(page) {
+NFTDetailsPage.getLayout = function getLayout(page: React.ReactNode) {
   return <RootLayout contentClassName="!pb-0">{page}</RootLayout>;
 };
 

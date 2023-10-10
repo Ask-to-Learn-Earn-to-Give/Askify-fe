@@ -1,8 +1,8 @@
 import { ExportIcon } from '@/components/icons/export-icon';
 
-interface VoteActionsTypes {
+interface CommentTypes {
   title: string;
-  action?: {
+  expertComment?: {
     id?: string;
     contract: {
       id: string;
@@ -13,11 +13,11 @@ interface VoteActionsTypes {
   }[];
 }
 
-export default function VoteActions({ title, action }: VoteActionsTypes) {
+export default function Comment({ title, expertComment }: CommentTypes) {
   return (
     <>
       <h4 className="mb-6 uppercase dark:text-gray-100">{title}</h4>
-      {action?.map((item: any, index: number) => (
+      {expertComment?.map((item: any, index: number) => (
         <div key={item.id} className="mt-6">
           <div className="flex items-start gap-3">
             <span className="shrink-0 text-gray-600 dark:text-gray-400">

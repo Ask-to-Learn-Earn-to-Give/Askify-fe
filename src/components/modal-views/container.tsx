@@ -20,6 +20,9 @@ const ProfileInfo = dynamic(
 const PreviewContent = dynamic(
   () => import('@/components/create-nft/nft-preview-content')
 );
+const BidPrice = dynamic(
+  () => import('@/components/vote/vote-details/bid-price')
+);
 
 function renderModalContent(view: MODAL_VIEW | string) {
   switch (view) {
@@ -37,6 +40,8 @@ function renderModalContent(view: MODAL_VIEW | string) {
       return <Followers />;
     case 'NFT_PREVIEW':
       return <PreviewContent />;
+    case 'BID_PRICE':
+      return <BidPrice />;
     default:
       return null;
   }

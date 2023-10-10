@@ -4,7 +4,6 @@ import storage from 'redux-persist/lib/storage';
 
 // import cacheReducer from "./cache/slice";
 import chainReducer from './chain/slice';
-
 const chainPersistConfig = {
   key: 'chain',
   storage,

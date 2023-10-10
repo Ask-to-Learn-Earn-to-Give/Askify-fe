@@ -38,7 +38,7 @@ const SearchPage: NextPageWithLayout<
   );
 };
 
-SearchPage.getLayout = function getLayout(page) {
+SearchPage.getLayout = function getLayout(page: React.ReactNode) {
   return <RootLayout>{page}</RootLayout>;
 };
 

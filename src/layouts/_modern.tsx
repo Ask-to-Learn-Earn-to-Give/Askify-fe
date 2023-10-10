@@ -1,7 +1,8 @@
 import cn from 'classnames';
 import Header from '@/layouts/header/header';
 import Sidebar from '@/layouts/sidebar/_default';
-
+import FooterSmall from '@/components/Footers/FooterSmall';
+import footerSmall from '@/data/static/Footer/footersmall';
 export default function ModernLayout({
   children,
   contentClassName,
@@ -17,6 +18,7 @@ export default function ModernLayout({
         )}
       >
         {children}
+        <FooterSmall {...footerSmall} />
       </main>
     </div>
   );
