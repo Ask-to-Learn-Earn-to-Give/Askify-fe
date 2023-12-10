@@ -22,6 +22,7 @@ import '@/assets/css/scrollbar.css';
 import '@/assets/css/globals.css';
 import '@/assets/css/range-slider.css';
 import { useState } from 'react';
+import { ProblemSolverProvider } from '../context/ProblemSolverContext';
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
@@ -48,17 +49,19 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
           defaultTheme="light"
         >
           <WagmiConfig config={wagmiConfig}>
-            <Provider store={store}>
-              <PersistGate loading={null} persistor={persistor}>
-                <WalletProvider>
-                  {getLayout(<Component {...pageProps} />)}
-                  <SettingsButton />
-                  <SettingsDrawer />
-                  <ModalsContainer />
-                  <DrawersContainer />
-                </WalletProvider>
-              </PersistGate>
-            </Provider>
+            <ProblemSolverProvider>
+              <Provider store={store}>
+                <PersistGate loading={null} persistor={persistor}>
+                  <WalletProvider>
+                    {getLayout(<Component {...pageProps} />)}
+                    <SettingsButton />
+                    <SettingsDrawer />
+                    <ModalsContainer />
+                    <DrawersContainer />
+                  </WalletProvider>
+                </PersistGate>
+              </Provider>
+            </ProblemSolverProvider>
           </WagmiConfig>
         </ThemeProvider>
       </QueryClientProvider>
