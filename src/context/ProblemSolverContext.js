@@ -64,9 +64,7 @@ const connectingWithSmartContractMint = async () => {
 export const ProblemSolverContext = React.createContext();
 export const ProblemSolverProvider = ({ children }) => {
   const { address } = useAccount();
-  console.log('address', address);
   // usestate
-  const [currentAccount, setCurrentAccount] = useState(address);
   const [userData, setUserData] = useState();
   const [data, setData] = useState([]);
   const [allUser, setAllUser] = useState('');
@@ -74,23 +72,23 @@ export const ProblemSolverProvider = ({ children }) => {
   const { operation: getAllUser, data: get } = useAxios(`/api/user`, 'GET');
   const router = useRouter();
   useEffect(() => {
-    if (!currentAccount) return;
+    if (!address) return;
     const getUser = async () => {
-      const res = await axios.get(`/api/user?address=${currentAccount}`);
+      const res = await axios.get(`/api/user?address=${address}`);
       const { user } = res.data;
       setUserData(user);
     };
 
-    // getUser();
-  }, [currentAccount]);
+    getUser();
+  }, [address]);
 
   // fetch all data from database
   useEffect(() => {
-    // getAllUser()?.then(({ users }) => {
-    //   setAllUser(users);
-    // });
+    getAllUser()?.then(({ users }) => {
+      setAllUser(users);
+    });
   }, []);
-
+  console.log('allUser', allUser);
   // fetch all data from blockchain
   useEffect(() => {
     fetchAllProblems().then((item) => {
@@ -382,7 +380,7 @@ export const ProblemSolverProvider = ({ children }) => {
     <ProblemSolverContext.Provider
       value={{
         uploadToIPFS,
-        currentAccount,
+        address,
         CreateProblem,
         fetchAllProblems,
         PlaceBid,
