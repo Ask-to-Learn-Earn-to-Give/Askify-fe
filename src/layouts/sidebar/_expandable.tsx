@@ -128,7 +128,7 @@ export default function Sidebar({ className }: { className?: string }) {
               router.push({ pathname: routes.profile, query: { ...restQuery } })
             }
           >
-            <AuthorCard image={AuthorImage} />
+            {/* <AuthorCard image={AuthorImage} /> */}
           </motion.div>
         ) : (
           <div>

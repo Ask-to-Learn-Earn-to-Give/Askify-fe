@@ -13,7 +13,7 @@ export default function ClassicLayout({
       <Sidebar className="hidden xl:block" />
       <main
         className={cn(
-          'min-h-screen px-4 pb-16 pt-4 sm:px-6 sm:pb-20 lg:px-8 xl:pb-24 xl:pt-5 3xl:px-10',
+          'min-h-[75vh]  px-4 pb-16 pt-4 sm:px-6 sm:pb-20 lg:px-8 xl:pb-24 xl:pt-5 3xl:px-10',
           contentClassName
         )}
       >

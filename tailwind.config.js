@@ -85,6 +85,10 @@ module.exports = {
         'calc-320': 'calc(100% - 320px)',
         'calc-358': 'calc(100% - 358px)',
       },
+      height: {
+        'calc-main': '100vh',
+      },
+
       fontFamily: {
         body: ['Fira Code', 'monospace'],
       },
