@@ -22,10 +22,6 @@ export const menuItems = [
     href: routes.problems,
     dropdownItems: [
       {
-        name: 'Explore',
-        href: routes.problem,
-      },
-      {
         name: 'Problems List',
         href: routes.problems,
       },

@@ -9,6 +9,7 @@ import ClassicScreen from '@/components/screens/classic-screen';
 import RetroScreen from '@/components/screens/retro-screen';
 import FooterSmall from '@/components/Footers/FooterSmall';
 import footerdata from '@/data/static/Footer/footersmall';
+import ProblemPage from './problem';
 export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {},
@@ -20,30 +21,31 @@ const HomePage: NextPageWithLayout<
 > = () => {
   const { layout } = useLayout();
 
-  // render minimal screen/page
-  if (layout === LAYOUT_OPTIONS.MINIMAL) {
-    return <MinimalScreen />;
-  }
+  return <ProblemPage />;
+  // // render minimal screen/page
+  // if (layout === LAYOUT_OPTIONS.MINIMAL) {
+  //   return <MinimalScreen />;
+  // }
 
-  // render classic screen/page
-  if (layout === LAYOUT_OPTIONS.CLASSIC) {
-    return <ClassicScreen />;
-  }
+  // // render classic screen/page
+  // if (layout === LAYOUT_OPTIONS.CLASSIC) {
+  //   return <ClassicScreen />;
+  // }
 
-  // render retro screen/page
-  if (layout === LAYOUT_OPTIONS.RETRO) {
-    return <RetroScreen />;
-  }
+  // // render retro screen/page
+  // if (layout === LAYOUT_OPTIONS.RETRO) {
+  //   return <RetroScreen />;
+  // }
 
-  // render default screen/page which is modern
-  return <ModernScreen />;
+  // // render default screen/page which is modern
+  // return <ModernScreen />;
 };
 
 HomePage.getLayout = function getLayout(page: React.ReactNode) {
   return (
     <RootLayout>
       {page}
-      <FooterSmall {...footerdata} />
+      {/* <FooterSmall {...footerdata} /> */}
     </RootLayout>
   );
 };

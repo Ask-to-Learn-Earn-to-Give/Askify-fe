@@ -20,7 +20,7 @@ export default function RetroLayout({
       >
         <div className="px-4 sm:px-6 lg:px-8 3xl:px-10">{children}</div>
       </main>
-      <SidebarTwo className="ltr:left-auto ltr:right-0 rtl:left-0 rtl:right-auto  xl:block" />
+      {/* <SidebarTwo className="ltr:left-auto ltr:right-0 rtl:left-0 rtl:right-auto  xl:block" /> */}
       <FooterSmall {...footerSmall} />
     </>
   );
