@@ -147,11 +147,11 @@ export default function Sidebar({ className }: { className?: string }) {
                 })
               }
             >
-              <AuthorCard
+              {/* <AuthorCard
                 image={AuthorImage}
                 name="Cameron Williamson"
                 role="admin"
-              />
+              /> */}
             </motion.div>
           </div>
         )}
