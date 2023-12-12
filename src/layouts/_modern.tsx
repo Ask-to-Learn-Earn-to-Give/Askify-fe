@@ -18,8 +18,8 @@ export default function ModernLayout({
         )}
       >
         {children}
-        <FooterSmall {...footerSmall} />
       </main>
+      <FooterSmall {...footerSmall} />
     </div>
   );
 }

@@ -15,7 +15,7 @@ import mirror from '@/assets/images/mirror.svg';
 import { useLayout } from '@/lib/hooks/use-layout';
 import { LAYOUT_OPTIONS } from '@/lib/constants';
 
-const VotePage: NextPageWithLayout = () => {
+const ProblemPage: NextPageWithLayout = () => {
   const router = useRouter();
   const { layout } = useLayout();
   return (
@@ -144,8 +144,8 @@ const VotePage: NextPageWithLayout = () => {
   );
 };
 
-VotePage.getLayout = function getLayout(page: React.ReactNode) {
+ProblemPage.getLayout = function getLayout(page: React.ReactNode) {
   return <RootLayout>{page}</RootLayout>;
 };
 
-export default VotePage;
+export default ProblemPage;

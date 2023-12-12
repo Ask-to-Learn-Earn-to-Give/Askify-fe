@@ -81,7 +81,7 @@ export const ProblemSolverProvider = ({ children }) => {
       setUserData(user);
     };
 
-    getUser();
+    // getUser();
   }, [currentAccount]);
 
   // fetch all data from database
