@@ -12,6 +12,10 @@ import discord from '@/assets/images/discord.svg';
 import forum from '@/assets/images/forum.svg';
 import bank from '@/assets/images/bank.svg';
 import mirror from '@/assets/images/mirror.svg';
+import telegram from '@/assets/images/telegram.svg';
+import twitter from '@/assets/images/twitter.svg';
+import book from '@/assets/images/book.png';
+
 import { useLayout } from '@/lib/hooks/use-layout';
 import { LAYOUT_OPTIONS } from '@/lib/constants';
 
@@ -20,7 +24,7 @@ const ProblemPage: NextPageWithLayout = () => {
   const { layout } = useLayout();
   return (
     <>
-      <NextSeo title="Problems" description="Askify " />
+      <NextSeo title="Askify" description="Askify " />
       <div className="mx-auto w-full max-w-[1160px] text-sm md:pt-14 4xl:pt-24">
         <div
           className={cn('grid ', {
@@ -48,12 +52,13 @@ const ProblemPage: NextPageWithLayout = () => {
               <Image alt="Vote Pool" src={votePool} />
             </div>
             <h3 className="mb-2 mt-6 text-sm font-medium uppercase text-gray-800 dark:text-gray-100 sm:text-base 3xl:text-lg">
-              Vote with Pool
+              DISCOVER PROBLEMS
             </h3>
             <p className="leading-loose text-gray-600 dark:text-gray-400">
-              Vote with POOL tokens held{' '}
-              <br className="hidden xs:inline-block" /> in your wallet or
-              delegated <br className="hidden xs:inline-block" /> to you.
+              Discover problems in
+              <br className="hidden xs:inline-block" />
+              here and help our Users <br className="hidden xs:inline-block" />{' '}
+              solve they problems.
             </p>
           </motion.div>
           <motion.a
@@ -82,7 +87,7 @@ const ProblemPage: NextPageWithLayout = () => {
             whileHover={{ scale: 1.015 }}
             target="_blank"
             rel="noopener noreferrer"
-            href="https://www.discourse.org/"
+            href="https://www.telegram.org/"
             className={cn(
               'rounded-lg bg-white p-6 shadow-card transition-shadow duration-200 hover:shadow-large dark:bg-light-dark',
               {
@@ -92,10 +97,10 @@ const ProblemPage: NextPageWithLayout = () => {
             )}
           >
             <span className="inline-block h-auto w-12 sm:w-auto">
-              <Image alt="Forum" src={forum} />
+              <Image alt="Forum" src={telegram} />
             </span>
             <h3 className="mt-6 text-sm font-medium uppercase text-orange-500 sm:mt-8 sm:text-base 3xl:mt-11 3xl:text-lg">
-              Join the Forum
+              Join the Telegram
             </h3>
           </motion.a>
           <motion.div
@@ -111,10 +116,10 @@ const ProblemPage: NextPageWithLayout = () => {
             )}
           >
             <div className="h-auto w-12 sm:w-auto">
-              <Image alt="Bank" src={bank} />
+              <Image alt="Bank" src={book} height={48} />
             </div>
             <h3 className="mt-6 text-sm font-medium uppercase text-blue-500 sm:mt-8 sm:text-base 3xl:mt-11 3xl:text-lg">
-              View Documentation
+              Documentation
             </h3>
           </motion.div>
           <motion.a
@@ -122,7 +127,7 @@ const ProblemPage: NextPageWithLayout = () => {
             whileHover={{ scale: 1.015 }}
             target="_blank"
             rel="noopener noreferrer"
-            href="https://forum.mirror.finance/"
+            href="https://twitter.com/Askify_Official"
             className={cn(
               'rounded-lg bg-white p-6 shadow-card transition-shadow duration-200 hover:shadow-large dark:bg-light-dark',
               {
@@ -132,10 +137,10 @@ const ProblemPage: NextPageWithLayout = () => {
             )}
           >
             <span className="inline-block h-auto w-11 sm:w-auto">
-              <Image alt="Mirror" src={mirror} />
+              <Image alt="Mirror" src={twitter} />
             </span>
             <h3 className="mt-6 text-sm font-medium uppercase text-gray-400 sm:mt-8 sm:text-base 3xl:mt-11 3xl:text-lg">
-              Read on mirror
+              Follow Our Twitter
             </h3>
           </motion.a>
         </div>
