@@ -39,11 +39,11 @@ export default function Sidebar({ className }: { className?: string }) {
 
       <Scrollbar style={{ height: 'calc(100% - 96px)' }}>
         <div className="px-6 pb-5 2xl:px-8">
-          <AuthorCard
+          {/* <AuthorCard
             image={AuthorImage}
             name="Cameron Williamson"
             role="admin"
-          />
+          /> */}
 
           <div className="mt-12">
             {menuItems.map((item, index) => (
@@ -60,7 +60,7 @@ export default function Sidebar({ className }: { className?: string }) {
             <div className="-mt-12">
               <Image src={ShapeImage} alt="Shape image" width={200} />
             </div>
-            <h2 className="mt-5 mb-7 text-center text-[20px] font-semibold leading-8 text-light-dark dark:text-white">
+            <h2 className="mb-7 mt-5 text-center text-[20px] font-semibold leading-8 text-light-dark dark:text-white">
               Explore the new Blockchain System
             </h2>
             <button className="h-12 rounded-lg bg-brand text-white">

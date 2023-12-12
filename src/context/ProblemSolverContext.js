@@ -86,10 +86,11 @@ export const ProblemSolverProvider = ({ children }) => {
 
   // fetch all data from database
   useEffect(() => {
-    getAllUser().then(({ users }) => {
-      setAllUser(users);
-    });
+    // getAllUser()?.then(({ users }) => {
+    //   setAllUser(users);
+    // });
   }, []);
+
   // fetch all data from blockchain
   useEffect(() => {
     fetchAllProblems().then((item) => {
@@ -152,7 +153,6 @@ export const ProblemSolverProvider = ({ children }) => {
   const fetchAllProblems = async () => {
     const res = await axios.get('/api/problem?limit=100&skip=0');
     const { problems } = res.data;
-
     return problems;
     // try {
     //   const provider = new ethers.providers.JsonRpcProvider(baobab);
@@ -192,7 +192,10 @@ export const ProblemSolverProvider = ({ children }) => {
     //   console.log(error);
     // }
   };
-
+  // fetch all data from database
+  useEffect(() => {
+    fetchAllProblems();
+  }, []);
   // place a bid price
   const PlaceBid = async (problemId, amount, comment) => {
     if (!problemId || !amount || !comment) console.log('data missing');
@@ -374,7 +377,7 @@ export const ProblemSolverProvider = ({ children }) => {
       console.log('error', error);
     }
   };
-  console.log('data', data);
+
   return (
     <ProblemSolverContext.Provider
       value={{
