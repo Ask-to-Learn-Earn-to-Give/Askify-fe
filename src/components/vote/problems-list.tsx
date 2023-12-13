@@ -3,8 +3,6 @@ import PropblemDetailCard from '@/components/vote/vote-details/problem-details-c
 import { ExportIcon } from '@/components/icons/export-icon';
 import { useEffect, useMemo, useState } from 'react';
 import axios from '@/lib/axios';
-import { useEffect, useMemo, useState } from 'react';
-import axios from '@/lib/axios';
 
 export default function ProblemList({ status }: { status: string }) {
   const [allProblems, setAllProblems] = useState([]);

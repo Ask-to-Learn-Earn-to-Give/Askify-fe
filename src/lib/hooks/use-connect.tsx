@@ -17,7 +17,6 @@ import {
   useNetwork,
 } from 'wagmi';
 import axios, { addTokenToAxios } from '../axios';
-import axios, { addTokenToAxios } from '../axios';
 
 export const WalletContext = createContext<any>({});
 
