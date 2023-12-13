@@ -47,7 +47,7 @@ export const WalletProvider = ({ children }: { children: ReactNode }) => {
 
       const {
         data: { nonce },
-      } = await axios.post('/auth/wallet', {
+      } = await axios.post('/api/auth/wallet', {
         address: address,
       });
 
@@ -59,8 +59,7 @@ export const WalletProvider = ({ children }: { children: ReactNode }) => {
 
       const {
         data: { token },
-        statusText,
-      } = await axios.post('/auth/verify-wallet', {
+      } = await axios.post('/api/auth/verify-wallet', {
         address: address,
         signedNonce: signedNonce,
       });

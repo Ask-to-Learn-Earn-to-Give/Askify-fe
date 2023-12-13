@@ -6,7 +6,7 @@ const routes = {
   nftDetails: '/nft/nft-details',
   search: '/nft/search',
   notification: '/notifications',
-  vote: '/vote',
+  problem: '/problem',
   problems: '/problems',
   createProblem: '/problems/create',
   charts: '/charts',

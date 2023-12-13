@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import dayjs from 'dayjs';
 import cn from 'classnames';
@@ -14,31 +14,13 @@ import { LAYOUT_OPTIONS } from '@/lib/constants';
 import { ChevronDown } from '@/components/icons/chevron-down';
 import { useModal } from '@/components/modal-views/context';
 import axios from '@/lib/axios';
+import { ProblemSolverContext } from '@/context/ProblemSolverContext';
 
-function BidActionButton() {
-  const { openModal } = useModal();
-  const DATAPASSTEST = 'asdf';
-
-  return (
-    <div className="mt-4 flex items-center gap-3 xs:mt-6 xs:inline-flex md:mt-10">
-      <Button
-        shape="rounded"
-        className="flex-1 xs:flex-auto"
-        onClick={() => openModal('BID_PRICE', DATAPASSTEST)}
-      >
-        Bid Now
-      </Button>
-    </div>
-  );
-}
-
-// FIXME: need to add vote type
-export default function PropblemDetailCard({ prob }: any) {
+export default function PropblemDetailCard({ problem }: any) {
   const [isExpand, setIsExpand] = useState(false);
   const { layout } = useLayout();
   const { openModal } = useModal();
-
-  const DATAPASSTEST = 'HIHI';
+  const { address } = useContext(ProblemSolverContext);
 
   const [bids, setBids] = useState([]);
 
@@ -50,12 +32,12 @@ export default function PropblemDetailCard({ prob }: any) {
     async function getBids() {
       const {
         data: { problemBids: bids },
-      } = await axios.get(`/problem/${prob._id}/bid?skip=0&limit=100`);
+      } = await axios.get(`/api/problem/${problem._id}/bid?skip=0&limit=100`);
       setBids(bids);
     }
 
     getBids();
-  }, [isExpand, prob._id]);
+  }, [isExpand, problem._id]);
 
   return (
     <motion.div
@@ -78,39 +60,22 @@ export default function PropblemDetailCard({ prob }: any) {
             onClick={() => setIsExpand(!isExpand)}
             className="cursor-pointer text-base font-medium leading-normal dark:text-gray-100 2xl:text-lg"
           >
-            {prob.title}
+            {problem.title}
           </h3>
           <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Problems #{prob.onchainId}
+            Problems #{problem.onchainId}
           </p>
 
-          {prob.status === 'waiting' && (
-            <>
-              {!isExpand ? (
-                <Button
-                  onClick={() => setIsExpand(!isExpand)}
-                  className="mt-4 w-full xs:mt-6 xs:w-auto md:mt-10"
-                  shape="rounded"
-                >
-                  Check Now
-                </Button>
-              ) : (
-                <BidActionButton />
-              )}
-            </>
-          )}
-
-          {/* show only for past vote */}
-          {prob.status === 'past' && (
+          {problem.status === 'solved' && (
             <time className="mt-4 block text-gray-400 xs:mt-6 md:mt-7">
               <span className="font-medium">Closed</span> at{' '}
-              {dayjs(prob.executed_at).format('MMM DD, YYYY')}
+              {dayjs(problem.executed_at).format('MMM DD, YYYY')}
             </time>
           )}
         </div>
 
         {/* vote countdown timer only for active & off-chain vote */}
-        {['active', 'off-chain'].indexOf(prob.status) !== -1 && (
+        {/* {['onprogress', 'waiting'].indexOf(problem.status) !== -1 && (
           <div
             className={cn(
               "before:content-[' '] relative grid h-full gap-2 before:absolute before:bottom-0 before:border-b before:border-r before:border-dashed before:border-gray-200 ltr:before:left-0 rtl:before:right-0 dark:border-gray-700 dark:before:border-gray-700 xs:gap-2.5 ",
@@ -127,42 +92,40 @@ export default function PropblemDetailCard({ prob }: any) {
             </h3>
             <AuctionCountdown date={new Date(Date.now() + 172800000)} />
           </div>
-        )}
+        )} */}
 
         {/* switch toggle indicator for past vote */}
-        {prob.status === 'solved' && (
-          <div className="mb-4 flex items-center gap-3 md:mb-0 md:items-start md:justify-end">
-            <Switch
-              checked={isExpand}
-              onChange={setIsExpand}
-              className="flex items-center gap-3 text-gray-400"
+        <div className="mb-4 flex items-center gap-3 md:mb-0 md:items-start md:justify-end">
+          <Switch
+            checked={isExpand}
+            onChange={setIsExpand}
+            className="flex items-center gap-3 text-gray-400"
+          >
+            <span className="inline-flex text-xs font-medium uppercase sm:text-sm">
+              Close
+            </span>
+            <div
+              className={cn(
+                isExpand
+                  ? 'bg-brand dark:bg-white'
+                  : 'bg-gray-200 dark:bg-gray-700',
+                'relative inline-flex h-[22px] w-10 items-center rounded-full transition-colors duration-300'
+              )}
             >
-              <span className="inline-flex text-xs font-medium uppercase sm:text-sm">
-                Close
-              </span>
-              <div
+              <span
                 className={cn(
                   isExpand
-                    ? 'bg-brand dark:bg-white'
-                    : 'bg-gray-200 dark:bg-gray-700',
-                  'relative inline-flex h-[22px] w-10 items-center rounded-full transition-colors duration-300'
+                    ? 'bg-white ltr:translate-x-5 rtl:-translate-x-5 dark:bg-gray-700'
+                    : 'bg-white ltr:translate-x-0.5 rtl:-translate-x-0.5 dark:bg-gray-200',
+                  'inline-block h-[18px] w-[18px] transform rounded-full bg-white transition-transform duration-200'
                 )}
-              >
-                <span
-                  className={cn(
-                    isExpand
-                      ? 'bg-white ltr:translate-x-5 rtl:-translate-x-5 dark:bg-gray-700'
-                      : 'bg-white ltr:translate-x-0.5 rtl:-translate-x-0.5 dark:bg-gray-200',
-                    'inline-block h-[18px] w-[18px] transform rounded-full bg-white transition-transform duration-200'
-                  )}
-                />
-              </div>
-              <span className="inline-flex text-xs font-medium uppercase sm:text-sm">
-                View
-              </span>
-            </Switch>
-          </div>
-        )}
+              />
+            </div>
+            <span className="inline-flex text-xs font-medium uppercase sm:text-sm">
+              View
+            </span>
+          </Switch>
+        </div>
       </motion.div>
       <AnimatePresence>
         {isExpand && (
@@ -179,7 +142,7 @@ export default function PropblemDetailCard({ prob }: any) {
                 href={'/'}
                 className="ml-1 inline-flex items-center gap-3 font-medium text-gray-900 hover:underline hover:opacity-90 focus:underline focus:opacity-90 dark:text-gray-100"
               >
-                {prob.author.fullName} <ExportIcon className="h-auto w-3" />
+                {problem.author.fullName} <ExportIcon className="h-auto w-3" />
               </a>
             </div>
             {/* Description */}
@@ -187,7 +150,7 @@ export default function PropblemDetailCard({ prob }: any) {
               <h4 className="mb-6 uppercase dark:text-gray-100">Description</h4>
               <div
                 className="dynamic-html grid gap-2 leading-relaxed text-gray-600 dark:text-gray-400"
-                dangerouslySetInnerHTML={{ __html: prob.description }}
+                dangerouslySetInnerHTML={{ __html: problem.description }}
               />
             </RevealContent>
             {/* Comment */}
@@ -195,30 +158,36 @@ export default function PropblemDetailCard({ prob }: any) {
               defaultHeight={320}
               className="mt-6 border-t border-dashed border-gray-200 pt-6 dark:border-gray-700"
             >
-              <Comment title={'Bid Price Actions'} bids={bids} />
+              <Comment
+                title={'Bid Price Actions'}
+                bids={bids}
+                problem={problem}
+              />
             </RevealContent>
 
-            {prob.status === 'active' ? (
-              <div className="mt-6 flex items-center justify-between border-t border-dashed border-gray-200 pt-6 dark:border-gray-700">
+            {problem.status !== 'waiting' &&
+              (address == problem.author.address ||
+                address == problem.expert.address) && (
+                <div className="mt-4 flex items-center gap-3 xs:mt-6 xs:inline-flex md:mt-10">
+                  <Button
+                    shape="rounded"
+                    className="flex-1 xs:flex-auto"
+                    onClick={() => {}}
+                  >
+                    Chat
+                  </Button>
+                </div>
+              )}
+            {problem.status === 'waiting' &&
+            address != problem.author.address ? (
+              <div className="mt-4 flex items-center gap-3 xs:mt-6 xs:inline-flex md:mt-10">
                 <Button
                   shape="rounded"
-                  fullWidth={true}
-                  className={cn({
-                    'sm:w-4/6 md:w-3/6 xl:w-2/6':
-                      layout !== LAYOUT_OPTIONS.RETRO,
-                    'w-full lg:w-3/6 2xl:w-[48%] 3xl:w-1/3':
-                      layout === LAYOUT_OPTIONS.RETRO,
-                  })}
-                  onClick={() => openModal('BID_PRICE', DATAPASSTEST)}
+                  className="flex-1 xs:flex-auto"
+                  onClick={() => openModal('BID_PRICE', problem.onchainId)}
                 >
                   Bid Now
                 </Button>
-                <div
-                  className="rotate-180 cursor-pointer p-8"
-                  onClick={() => setIsExpand(!isExpand)}
-                >
-                  <ChevronDown />
-                </div>
               </div>
             ) : (
               <div className="mt-6 flex items-center justify-between border-t border-dashed border-gray-200 pt-6 dark:border-gray-700">

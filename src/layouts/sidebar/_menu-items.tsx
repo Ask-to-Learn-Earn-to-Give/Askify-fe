@@ -19,12 +19,8 @@ export const menuItems = [
   {
     name: 'Problems',
     icon: <VoteIcon />,
-    href: routes.vote,
+    href: routes.problems,
     dropdownItems: [
-      {
-        name: 'Explore',
-        href: routes.vote,
-      },
       {
         name: 'Problems List',
         href: routes.problems,
