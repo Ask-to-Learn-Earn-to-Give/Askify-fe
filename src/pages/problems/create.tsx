@@ -35,7 +35,6 @@ const CreateProposalPage: NextPageWithLayout = () => {
     });
   };
 
-  console.log('problemData', problemData);
   const router = useRouter();
   function goToAllProposalPage() {
     setTimeout(() => {

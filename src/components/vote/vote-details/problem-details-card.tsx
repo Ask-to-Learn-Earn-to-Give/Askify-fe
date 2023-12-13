@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import dayjs from 'dayjs';
 import cn from 'classnames';
@@ -13,6 +13,7 @@ import { useLayout } from '@/lib/hooks/use-layout';
 import { LAYOUT_OPTIONS } from '@/lib/constants';
 import { ChevronDown } from '@/components/icons/chevron-down';
 import { useModal } from '@/components/modal-views/context';
+import axios from '@/lib/axios';
 
 function BidActionButton() {
   const { openModal } = useModal();
@@ -39,6 +40,23 @@ export default function PropblemDetailCard({ prob }: any) {
 
   const DATAPASSTEST = 'HIHI';
 
+  const [bids, setBids] = useState([]);
+
+  useEffect(() => {
+    if (!isExpand) {
+      return;
+    }
+
+    async function getBids() {
+      const {
+        data: { problemBids: bids },
+      } = await axios.get(`/problem/${prob._id}/bid?skip=0&limit=100`);
+      setBids(bids);
+    }
+
+    getBids();
+  }, [isExpand, prob._id]);
+
   return (
     <motion.div
       layout
@@ -63,11 +81,10 @@ export default function PropblemDetailCard({ prob }: any) {
             {prob.title}
           </h3>
           <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Problems #{prob.id}
+            Problems #{prob.onchainId}
           </p>
 
-          {/* show only when vote is active */}
-          {prob.status === 'active' && (
+          {prob.status === 'waiting' && (
             <>
               {!isExpand ? (
                 <Button
@@ -113,7 +130,7 @@ export default function PropblemDetailCard({ prob }: any) {
         )}
 
         {/* switch toggle indicator for past vote */}
-        {prob.status === 'past' && (
+        {prob.status === 'solved' && (
           <div className="mb-4 flex items-center gap-3 md:mb-0 md:items-start md:justify-end">
             <Switch
               checked={isExpand}
@@ -159,10 +176,10 @@ export default function PropblemDetailCard({ prob }: any) {
             <div className="my-6 border-y border-dashed border-gray-200 py-6 text-gray-500 dark:border-gray-700 dark:text-gray-400">
               Created by:{' '}
               <a
-                href={prob.proposed_by.link}
+                href={'/'}
                 className="ml-1 inline-flex items-center gap-3 font-medium text-gray-900 hover:underline hover:opacity-90 focus:underline focus:opacity-90 dark:text-gray-100"
               >
-                {prob.proposed_by.id} <ExportIcon className="h-auto w-3" />
+                {prob.author.fullName} <ExportIcon className="h-auto w-3" />
               </a>
             </div>
             {/* Description */}
@@ -178,10 +195,7 @@ export default function PropblemDetailCard({ prob }: any) {
               defaultHeight={320}
               className="mt-6 border-t border-dashed border-gray-200 pt-6 dark:border-gray-700"
             >
-              <Comment
-                title={'Bid Price Actions'}
-                expertComment={prob?.action}
-              />
+              <Comment title={'Bid Price Actions'} bids={bids} />
             </RevealContent>
 
             {prob.status === 'active' ? (

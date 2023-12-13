@@ -40,7 +40,7 @@ const ProposalsPage: NextPageWithLayout = () => {
     {
       title: (
         <>
-          Active{' '}
+          Waiting{' '}
           {totalActiveVote > 0 && (
             <span className="ltr:ml-0.5 rtl:mr-0.5 ltr:md:ml-1.5 rtl:md:mr-1.5 ltr:lg:ml-2 rtl:lg:mr-2">
               {totalActiveVote}
@@ -48,13 +48,27 @@ const ProposalsPage: NextPageWithLayout = () => {
           )}
         </>
       ),
-      path: 'active',
+      path: 'waiting',
     },
 
     {
       title: (
         <>
-          Closed{' '}
+          In Progress{' '}
+          {totalActiveVote > 0 && (
+            <span className="ltr:ml-0.5 rtl:mr-0.5 ltr:md:ml-1.5 rtl:md:mr-1.5 ltr:lg:ml-2 rtl:lg:mr-2">
+              {totalActiveVote}
+            </span>
+          )}
+        </>
+      ),
+      path: 'onprogress',
+    },
+
+    {
+      title: (
+        <>
+          Solved{' '}
           {totalPastVote > 0 && (
             <span className="ltr:ml-0.5 rtl:mr-0.5 ltr:md:ml-1.5 rtl:md:mr-1.5 ltr:lg:ml-2 rtl:lg:mr-2">
               {totalPastVote}
@@ -62,7 +76,7 @@ const ProposalsPage: NextPageWithLayout = () => {
           )}
         </>
       ),
-      path: 'past',
+      path: 'solved',
     },
   ];
   return (
@@ -107,11 +121,15 @@ const ProposalsPage: NextPageWithLayout = () => {
         </header>
         <ParamTab tabMenu={tabMenuItems}>
           <TabPanel className="focus:outline-none">
-            <ProblemsList voteStatus={'active'} />
+            <ProblemsList status={'waiting'} />
           </TabPanel>
 
           <TabPanel className="focus:outline-none">
-            <ProblemsList voteStatus={'past'} />
+            <ProblemsList status={'onprogress'} />
+          </TabPanel>
+
+          <TabPanel className="focus:outline-none">
+            <ProblemsList status={'solved'} />
           </TabPanel>
         </ParamTab>
       </section>
