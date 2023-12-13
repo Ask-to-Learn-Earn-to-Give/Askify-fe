@@ -3,6 +3,8 @@ import PropblemDetailCard from '@/components/vote/vote-details/problem-details-c
 import { ExportIcon } from '@/components/icons/export-icon';
 import { useEffect, useMemo, useState } from 'react';
 import axios from '@/lib/axios';
+import { useEffect, useMemo, useState } from 'react';
+import axios from '@/lib/axios';
 
 export default function ProblemList({ status }: { status: string }) {
   const [allProblems, setAllProblems] = useState([]);
@@ -11,7 +13,7 @@ export default function ProblemList({ status }: { status: string }) {
     async function getProblems() {
       const {
         data: { problems },
-      } = await axios.get('/problem?skip=0&limit=100');
+      } = await axios.get('/api/problem?skip=0&limit=100');
       setAllProblems(problems);
     }
 
@@ -26,11 +28,8 @@ export default function ProblemList({ status }: { status: string }) {
     <LayoutGroup>
       <motion.div layout initial={{ borderRadius: 16 }} className="rounded-2xl">
         {problems.length > 0 ? (
-          problems.map((prob: any) => (
-            <PropblemDetailCard
-              key={`${prob.title}-key-${prob.id}`}
-              prob={prob}
-            />
+          problems.map((problem: any) => (
+            <PropblemDetailCard key={problem._id} problem={problem} />
           ))
         ) : (
           <div className="flex flex-col items-center justify-center rounded-lg bg-white px-4 py-16 text-center shadow-card dark:bg-light-dark xs:px-6 md:px-5 md:py-24">

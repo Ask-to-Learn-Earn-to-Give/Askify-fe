@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Web3Modal from 'web3modal';
 import { ethers } from 'ethers';
 import Router from 'next/router';
@@ -63,7 +63,13 @@ const connectingWithSmartContractMint = async () => {
 };
 export const ProblemSolverContext = React.createContext();
 export const ProblemSolverProvider = ({ children }) => {
-  const { address } = useAccount();
+  const { address: address_ } = useAccount();
+
+  const address = useMemo(() => {
+    if (!address_) return null;
+    return address_.toLowerCase();
+  }, [address_]);
+
   // usestate
   const [userData, setUserData] = useState();
   const [data, setData] = useState([]);
@@ -73,6 +79,7 @@ export const ProblemSolverProvider = ({ children }) => {
   const router = useRouter();
   useEffect(() => {
     if (!address) return;
+
     const getUser = async () => {
       const res = await axios.get(`/api/user?address=${address}`);
       const { user } = res.data;
@@ -88,7 +95,6 @@ export const ProblemSolverProvider = ({ children }) => {
       setAllUser(users);
     });
   }, []);
-  console.log('allUser', allUser);
   // fetch all data from blockchain
   useEffect(() => {
     fetchAllProblems().then((item) => {
@@ -152,43 +158,6 @@ export const ProblemSolverProvider = ({ children }) => {
     const res = await axios.get('/api/problem?limit=100&skip=0');
     const { problems } = res.data;
     return problems;
-    // try {
-    //   const provider = new ethers.providers.JsonRpcProvider(baobab);
-    //   const contract = fetchContract(provider);
-    //   const data = await contract.getAllProblems();
-    //   const items = await Promise.all(
-    //     data.map(
-    //       async ({
-    //         id,
-    //         title,
-    //         image,
-    //         description,
-    //         user,
-    //         selectedExpert,
-    //         cost,
-    //         solved,
-    //         markedAsSolved,
-    //         selecting,
-    //       }) => {
-    //         return {
-    //           id: id.toString(),
-    //           title,
-    //           problemImage: image,
-    //           expertDescription: description,
-    //           address: user,
-    //           selectedExpert,
-    //           cost: cost.toString(),
-    //           solved,
-    //           markedAsSolved,
-    //           selecting,
-    //         };
-    //       }
-    //     )
-    //   );
-    //   return items;
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
   // fetch all data from database
   useEffect(() => {
@@ -256,36 +225,6 @@ export const ProblemSolverProvider = ({ children }) => {
     const res = await axios.get(`/api/problem/${problemId}/bid`);
     const { problemBids } = res.data;
     return problemBids;
-    // if (!problemId) console.log("data missing");
-    // try {
-    //   const contract = await connectingWithSmartContract();
-    //   const data = await contract.getBids(problemId);
-    //   const items = await Promise.all(
-    //     data.map(
-    //       async ({
-    //         bidId,
-    //         problemId,
-    //         expert,
-    //         bidAmount,
-    //         expertDescription,
-    //       }) => {
-    //         return {
-    //           bidId: bidId.toString(),
-    //           problemId: problemId.toString(),
-    //           expert,
-    //           bidAmount: ethers.utils.formatUnits(
-    //             bidAmount.toString(),
-    //             "ether"
-    //           ),
-    //           expertDescription,
-    //         };
-    //       }
-    //     )
-    //   );
-    //   return items;
-    // } catch (error) {
-    //   console.log("error", error);
-    // }
   };
   const solvedProblem = async (_problemId, _expert) => {
     try {
@@ -298,6 +237,7 @@ export const ProblemSolverProvider = ({ children }) => {
       console.log('error', error);
     }
   };
+
   const unSolvedProblem = async (_problemId) => {
     try {
       const contract = await connectingWithSmartContract();
