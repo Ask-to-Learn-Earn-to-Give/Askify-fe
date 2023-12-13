@@ -16,6 +16,7 @@ import {
   useSwitchNetwork,
   useNetwork,
 } from 'wagmi';
+import axios, { addTokenToAxios } from '../axios';
 
 export const WalletContext = createContext<any>({});
 
@@ -31,11 +32,45 @@ export const WalletProvider = ({ children }: { children: ReactNode }) => {
 
   const handleDisconnectNetwork = useCallback(async () => {
     dispatch(disconnectNetwork(''));
+
+    localStorage.removeItem('token');
   }, []);
 
-  const handleConnectNetwork = useCallback(async ({ connector }: any) => {
-    dispatch(connectNetwork(connector?.id));
-  }, []);
+  const handleConnectNetwork = useCallback(
+    async ({ address, connector }: any) => {
+      dispatch(connectNetwork(connector?.id));
+
+      if (localStorage.getItem('token')) {
+        addTokenToAxios();
+        return;
+      }
+
+      const {
+        data: { nonce },
+      } = await axios.post('/auth/wallet', {
+        address: address,
+      });
+
+      const signedNonce = await window.ethereum.request({
+        method: 'personal_sign',
+        params: [`0x${Buffer.from(nonce, 'utf8').toString('hex')}`, address],
+        from: address,
+      });
+
+      const {
+        data: { token },
+        statusText,
+      } = await axios.post('/auth/verify-wallet', {
+        address: address,
+        signedNonce: signedNonce,
+      });
+
+      localStorage.setItem('token', token);
+      addTokenToAxios();
+    },
+    []
+  );
+
   const {
     isConnected,
     connector: currentConnector,

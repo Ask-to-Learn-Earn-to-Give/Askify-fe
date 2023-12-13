@@ -1,25 +1,31 @@
 import { motion, LayoutGroup } from 'framer-motion';
 import PropblemDetailCard from '@/components/vote/vote-details/problem-details-card';
 import { ExportIcon } from '@/components/icons/export-icon';
-// static data
-import { AskifyVotes } from '@/data/static/problems-data';
+import { useEffect, useMemo, useState } from 'react';
+import axios from '@/lib/axios';
 
-export default function VoteList({ voteStatus }: { voteStatus: string }) {
-  // getProblemsByStatus
-  function getProblemsByStatus(status: string) {
-    const votesByStatus = AskifyVotes.filter((vote) => vote.status === status);
-    return {
-      problems: votesByStatus,
-      totalProblems: votesByStatus.length,
-    };
-  }
+export default function ProblemList({ status }: { status: string }) {
+  const [allProblems, setAllProblems] = useState([]);
 
-  const { problems, totalProblems } = getProblemsByStatus(voteStatus);
+  useEffect(() => {
+    async function getProblems() {
+      const {
+        data: { problems },
+      } = await axios.get('/problem?skip=0&limit=100');
+      setAllProblems(problems);
+    }
+
+    getProblems();
+  }, []);
+
+  const problems = useMemo(() => {
+    return allProblems.filter((problem: any) => problem.status === status);
+  }, [allProblems, status]);
 
   return (
     <LayoutGroup>
       <motion.div layout initial={{ borderRadius: 16 }} className="rounded-2xl">
-        {totalProblems > 0 ? (
+        {problems.length > 0 ? (
           problems.map((prob: any) => (
             <PropblemDetailCard
               key={`${prob.title}-key-${prob.id}`}
