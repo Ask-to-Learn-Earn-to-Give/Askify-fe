@@ -49,64 +49,9 @@ export default function Profile() {
             </div>
           </div>
         </div>
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-6 border-y border-dashed border-gray-200 py-5 text-center dark:border-gray-700 md:justify-start ltr:md:text-left rtl:md:text-right xl:mt-12 xl:gap-8 xl:py-6">
-          <div>
-            <div className="mb-1.5 text-lg font-medium tracking-tighter text-gray-900 dark:text-white">
-              {authorData?.following}
-            </div>
-            <div className="text-sm tracking-tighter text-gray-600 dark:text-gray-400">
-              Following
-            </div>
-          </div>
-          <div>
-            <div className="mb-1.5 text-lg font-medium tracking-tighter text-gray-900 dark:text-white">
-              {authorData?.followers}
-            </div>
-            <div className="text-sm tracking-tighter text-gray-600 dark:text-gray-400">
-              Followers
-            </div>
-          </div>
-          <Button
-            color="white"
-            className="shadow-card dark:bg-light-dark md:h-10 md:px-5 xl:h-12 xl:px-7"
-          >
-            Follow
-          </Button>
-        </div>
-        <div className="border-y border-dashed border-gray-200 py-5 text-center dark:border-gray-700 ltr:md:text-left rtl:md:text-right xl:py-6">
-          <div className="mb-2 text-sm font-medium uppercase tracking-wider text-gray-900 dark:text-white">
-            Followed by
-          </div>
-          <div className="flex justify-center md:justify-start">
-            {authorData?.followed_by?.map((item) => (
-              <AnchorLink
-                key={`author-key-${item?.id}`}
-                href="/"
-                className="-ml-2 first:ml-0"
-              >
-                <Avatar
-                  size="sm"
-                  image={item?.avatar?.thumbnail}
-                  alt="Author"
-                  height={28}
-                  width={28}
-                  className="dark:border-gray-500"
-                />
-              </AnchorLink>
-            ))}
-          </div>
-          <div className="mt-4">
-            <AnchorLink
-              href="/"
-              className="text-sm tracking-tighter text-gray-600 transition hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-            >
-              View All
-            </AnchorLink>
-          </div>
-        </div>
         <AuthorInformation className="hidden md:block" data={authorData} />
       </div>
-      <div className="grow pt-6 pb-9 md:-mt-2.5 md:pt-1.5 md:pb-0 md:ltr:pl-7 md:rtl:pr-7 lg:ltr:pl-10 lg:rtl:pr-10 3xl:ltr:pl-14 3xl:rtl:pr-14">
+      <div className="grow pb-9 pt-6 md:-mt-2.5 md:pb-0 md:pt-1.5 md:ltr:pl-7 md:rtl:pr-7 lg:ltr:pl-10 lg:rtl:pr-10 3xl:ltr:pl-14 3xl:rtl:pr-14">
         <ProfileTab />
       </div>
       <AuthorInformation data={authorData} />

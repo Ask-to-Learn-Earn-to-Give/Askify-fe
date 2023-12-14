@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import Message from './Message';
 import { ProblemSolverContext } from '@/context/ProblemSolverContext';
 import Button from '../ui/button/button';
+import { useRouter } from 'next/router';
 const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
   const [messageInput, setMessageInput] = useState('');
   const { currentAccount, solvedProblem, unSolvedProblem } =
     useContext(ProblemSolverContext);
   const boxRef = useRef(null);
-
+  const router = useRouter();
   const currentId = (chatGroup?.members || []).find(
     ({ address }: any) => address == currentAccount
   )?._id;
@@ -54,10 +55,13 @@ const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
       handleMessageSubmit();
     }
   };
+  const handleCreate = () => {
+    router.push('/nft/create-nft');
+  };
   return (
     <div>
       <div
-        className="h-[500px] max-h-[500px] w-[80%] overflow-y-scroll  bg-gray-100 p-[30px]"
+        className="h-[500px] max-h-[500px]  overflow-y-scroll  bg-gray-100 p-[30px]"
         ref={boxRef}
       >
         {messages.map(({ message, index }: any) => {
@@ -77,7 +81,7 @@ const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
       </div>
 
       <form
-        className="mt-[20px]  h-[100px] w-[80%] w-full"
+        className="mt-[20px]  h-[100px]  w-full"
         onSubmit={(event) => {
           event.preventDefault();
           handleMessageSubmit();
@@ -108,7 +112,7 @@ const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
         <div className="flex-start m-[20px] flex gap-10">
           <Button onClick={() => handleSolverProblem()}>Solved</Button>
           <Button onClick={() => handleUnSolverProblem()}>Unsolved</Button>
-          <Button>Create NFT</Button>
+          <Button onClick={handleCreate}>Create NFT</Button>
         </div>
       </div>
     </div>

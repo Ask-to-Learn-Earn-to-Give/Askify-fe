@@ -143,25 +143,6 @@ export default function NftDetails({ product }: { product: NftDetailsProps }) {
                         />
                       </AnchorLink>
                     </div>
-                    <div className="block">
-                      <h3 className="text-heading-style mb-2 uppercase text-gray-900 dark:text-white">
-                        Block Chain
-                      </h3>
-                      <div className="flex flex-col gap-2">
-                        {block_chains?.map((item: any) => (
-                          <AnchorLink
-                            href="#"
-                            className="inline-flex"
-                            key={item?.id}
-                          >
-                            <ListCard
-                              item={item}
-                              className="rounded-full p-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                            />
-                          </AnchorLink>
-                        ))}
-                      </div>
-                    </div>
                   </div>
                 </TabPanel>
                 <TabPanel className="focus:outline-none">

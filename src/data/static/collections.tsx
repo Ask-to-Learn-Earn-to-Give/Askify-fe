@@ -28,8 +28,8 @@ export const collections = [
     image: CollectionImage1,
     user: {
       avatar: User1,
-      name: 'Cameronwilliamson',
-      slug: 'cameronwilliamson',
+      name: 'Askify',
+      slug: 'Askify',
     },
   },
   {
@@ -42,8 +42,8 @@ export const collections = [
     image: CollectionImage2,
     user: {
       avatar: User2,
-      name: 'Cameronwilliamson',
-      slug: 'cameronwilliamson',
+      name: 'Askify',
+      slug: 'Askify',
     },
   },
   {
@@ -56,8 +56,8 @@ export const collections = [
     image: CollectionImage3,
     user: {
       avatar: User3,
-      name: 'Cameronwilliamson',
-      slug: 'cameronwilliamson',
+      name: 'Askify',
+      slug: 'Askify',
     },
   },
   {
@@ -70,8 +70,8 @@ export const collections = [
     image: CollectionImage4,
     user: {
       avatar: User4,
-      name: 'Cameronwilliamson',
-      slug: 'cameronwilliamson',
+      name: 'Askify',
+      slug: 'Askify',
     },
   },
   {
@@ -84,8 +84,8 @@ export const collections = [
     image: CollectionImage5,
     user: {
       avatar: User5,
-      name: 'Cameronwilliamson',
-      slug: 'cameronwilliamson',
+      name: 'Askify',
+      slug: 'Askify',
     },
   },
   {
@@ -98,8 +98,8 @@ export const collections = [
     image: CollectionImage6,
     user: {
       avatar: User4,
-      name: 'Cameronwilliamson',
-      slug: 'cameronwilliamson',
+      name: 'Askify',
+      slug: 'Askify',
     },
   },
   {
@@ -112,8 +112,8 @@ export const collections = [
     image: CollectionImage2,
     user: {
       avatar: User1,
-      name: 'Cameronwilliamson',
-      slug: 'cameronwilliamson',
+      name: 'Askify',
+      slug: 'Askify',
     },
   },
   {
@@ -126,8 +126,8 @@ export const collections = [
     image: CollectionImage1,
     user: {
       avatar: User2,
-      name: 'Cameronwilliamson',
-      slug: 'cameronwilliamson',
+      name: 'Askify',
+      slug: 'Askify',
     },
   },
 ];

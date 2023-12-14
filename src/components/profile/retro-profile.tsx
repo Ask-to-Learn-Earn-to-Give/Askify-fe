@@ -52,31 +52,8 @@ export default function RetroProfile() {
                 users: data,
               })
             }
-          >
-            <div className="inline-block text-sm font-medium tracking-tighter text-gray-900 ltr:pr-2 rtl:pl-2 dark:text-white">
-              {authorData?.following}
-            </div>
-            <div className="inline-block text-sm tracking-tighter text-gray-600 dark:text-gray-400">
-              Following
-            </div>
-          </button>
-          <button
-            className="ltr:pl-6 rtl:pr-6"
-            onClick={() =>
-              openModal('FOLLOWERS_VIEW', {
-                title: 'Followers',
-                count: '1,845',
-                users: data,
-              })
-            }
-          >
-            <div className="inline-block text-sm font-medium tracking-tighter text-gray-900 ltr:pr-2 rtl:pl-2 dark:text-white">
-              {authorData?.followers}
-            </div>
-            <div className="inline-block text-sm tracking-tighter text-gray-600 dark:text-gray-400">
-              Followers
-            </div>
-          </button>
+          ></button>
+
           <button
             className="cursor-pointer text-gray-500 transition hover:text-gray-900 ltr:pl-6 rtl:pr-6 dark:hover:text-white"
             onClick={() => openModal('PROFILE_INFO_VIEW')}
@@ -85,7 +62,7 @@ export default function RetroProfile() {
           </button>
         </div>
       </div>
-      <div className="grow pt-6 pb-9 md:pb-0">
+      <div className="grow pb-9 pt-6 md:pb-0">
         <ProfileTab />
       </div>
       <AuthorInformation data={authorData} />

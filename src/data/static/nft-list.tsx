@@ -7,7 +7,7 @@ import NFT4 from '@/assets/images/nft/nft-4.jpg';
 export const NFTList = [
   {
     id: 1,
-    author: 'cameronwilliamson',
+    author: 'Askify',
     authorImage: AuthorImage,
     image: NFT1,
     name: 'Pulses Of Imagination #214',
@@ -16,7 +16,7 @@ export const NFTList = [
   },
   {
     id: 2,
-    author: 'cameronwilliamson',
+    author: 'Askify',
     authorImage: AuthorImage,
     image: NFT2,
     name: 'Pulses Of Imagination #214',
@@ -25,7 +25,7 @@ export const NFTList = [
   },
   {
     id: 3,
-    author: 'cameronwilliamson',
+    author: 'Askify',
     authorImage: AuthorImage,
     image: NFT3,
     name: 'Imagination of Pulses',
@@ -34,7 +34,7 @@ export const NFTList = [
   },
   {
     id: 4,
-    author: 'cameronwilliamson',
+    author: 'Askify',
     authorImage: AuthorImage,
     image: NFT4,
     name: 'Pulses Of Imagination #214',
@@ -43,7 +43,7 @@ export const NFTList = [
   },
   {
     id: 5,
-    author: 'cameronwilliamson',
+    author: 'Askify',
     authorImage: AuthorImage,
     image: NFT2,
     name: 'Pulses Of Imagination #214',
@@ -52,7 +52,7 @@ export const NFTList = [
   },
   {
     id: 6,
-    author: 'cameronwilliamson',
+    author: 'Askify',
     authorImage: AuthorImage,
     image: NFT4,
     name: 'Pulses Of Imagination #214',
@@ -61,7 +61,7 @@ export const NFTList = [
   },
   {
     id: 7,
-    author: 'cameronwilliamson',
+    author: 'Askify',
     authorImage: AuthorImage,
     image: NFT3,
     name: 'Pulses Of Imagination #214',
@@ -70,7 +70,7 @@ export const NFTList = [
   },
   {
     id: 8,
-    author: 'cameronwilliamson',
+    author: 'Askify',
     authorImage: AuthorImage,
     image: NFT1,
     name: 'Pulses Of Imagination #214',
