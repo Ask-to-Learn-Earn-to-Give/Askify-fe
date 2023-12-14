@@ -84,33 +84,33 @@ export const authorData = {
   socials: [
     {
       id: 1,
-      title: '@dontbesovasya',
-      link: 'https://dontbesovasya.io',
+      title: '@askify',
+      link: 'https://askify.xyz',
       icon: <Twitter className="w-4" />,
     },
     {
       id: 2,
-      title: '@dontbesovasya',
-      link: 'https://dontbesovasya.io',
+      title: '@askify',
+      link: 'https://askify.xyz',
       icon: <Facebook className="w-4" />,
     },
     {
       id: 3,
-      title: '@dontbesovasya',
-      link: 'https://dontbesovasya.io',
+      title: '@askify',
+      link: 'https://askify.xyz',
       icon: <Instagram className="w-4" />,
     },
   ],
   links: [
     {
       id: 1,
-      title: '@dontbesovasya',
-      link: 'https://dontbesovasya.io',
+      title: '@askify',
+      link: 'https://askify.xyz',
     },
     {
       id: 2,
-      title: '@dontbesovasya',
-      link: 'https://dontbesovasya.io',
+      title: '@askify',
+      link: 'https://askify.xyz',
     },
   ],
 };

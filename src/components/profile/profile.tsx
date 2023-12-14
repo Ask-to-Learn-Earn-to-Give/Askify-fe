@@ -4,9 +4,6 @@ import AuthorInformation from '@/components/author/author-information';
 import { authorData } from '@/data/static/author';
 import { Check } from '@/components/icons/check';
 import { Copy } from '@/components/icons/copy';
-import Button from '@/components/ui/button';
-import AnchorLink from '@/components/ui/links/anchor-link';
-import Avatar from '@/components/ui/avatar';
 import ProfileTab from '@/components/profile/profile-tab';
 
 export default function Profile() {
