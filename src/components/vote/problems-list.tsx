@@ -56,20 +56,11 @@ export default function ProblemList({ status }: { status: string }) {
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://discord.com/"
+                href="https://twitter.com/Askify_Official"
                 className="inline-flex items-center gap-1 text-gray-900 underline transition-opacity duration-200 hover:no-underline hover:opacity-90 dark:text-gray-100"
               >
-                Discord <ExportIcon className="h-auto w-3" />
+                Twitter <ExportIcon className="h-auto w-3" />
               </a>{' '}
-              or{' '}
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://www.discourse.org/"
-                className="inline-flex items-center gap-1 text-gray-900 underline transition-opacity duration-200 hover:no-underline hover:opacity-90 dark:text-gray-100"
-              >
-                Discourse <ExportIcon className="h-auto w-3" />
-              </a>
             </p>
           </div>
         )}
