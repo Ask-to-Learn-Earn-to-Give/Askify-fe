@@ -14,6 +14,7 @@ const routes = {
   portfolio: '/profile?view=portfolio',
   history: '/profile?view=history',
   classic: '/classic',
+  connectRoom: '/connectroom',
 };
 
 export default routes;

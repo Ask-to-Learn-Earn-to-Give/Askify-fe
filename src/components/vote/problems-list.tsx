@@ -21,7 +21,6 @@ export default function ProblemList({ status }: { status: string }) {
   const problems = useMemo(() => {
     return allProblems.filter((problem: any) => problem.status === status);
   }, [allProblems, status]);
-
   return (
     <LayoutGroup>
       <motion.div layout initial={{ borderRadius: 16 }} className="rounded-2xl">

@@ -75,7 +75,7 @@ export const ProblemSolverProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [allUser, setAllUser] = useState('');
   const [propData, setPropData] = useState([]);
-  const { operation: getAllUser, data: get } = useAxios(`/api/user`, 'GET');
+  const { operation: getAllUser, data: users } = useAxios(`/api/user`, 'GET');
   const router = useRouter();
   useEffect(() => {
     if (!address) return;

@@ -9,7 +9,7 @@ import { VoteIcon } from '@/components/icons/vote-icon';
 import { PlusCircle } from '@/components/icons/plus-circle';
 import { CompassIcon } from '@/components/icons/compass';
 import { LivePricing } from '@/components/icons/live-pricing';
-
+import { NormalGridIcon } from '@/components/icons/normal-grid';
 export const menuItems = [
   {
     name: 'Home',
@@ -18,7 +18,7 @@ export const menuItems = [
   },
   {
     name: 'Problems',
-    icon: <VoteIcon />,
+    icon: <PoolIcon />,
     href: routes.problems,
     dropdownItems: [
       {
@@ -33,7 +33,7 @@ export const menuItems = [
   },
   {
     name: 'NFTs',
-    icon: <CompassIcon />,
+    icon: <NormalGridIcon />,
     href: routes.search,
     dropdownItems: [
       {
@@ -57,5 +57,10 @@ export const menuItems = [
     name: 'Profile',
     icon: <ProfileIcon />,
     href: routes.profile,
+  },
+  {
+    name: 'Connect Room',
+    icon: <ExchangeIcon />,
+    href: routes.connectRoom,
   },
 ];
