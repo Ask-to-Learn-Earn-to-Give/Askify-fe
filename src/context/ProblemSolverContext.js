@@ -79,7 +79,6 @@ export const ProblemSolverProvider = ({ children }) => {
   const router = useRouter();
   useEffect(() => {
     if (!address) return;
-
     const getUser = async () => {
       const res = await axios.get(`/api/user?address=${address}`);
       const { user } = res.data;
