@@ -6,7 +6,6 @@ import Web3 from 'web3';
 
 export default function Comment({ title, bids, problem }: any) {
   const { address, selectedExpert } = useContext(ProblemSolverContext);
-  console.log('items', bids);
 
   const handleSelected = async ({
     problemOnchainId,

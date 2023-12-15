@@ -31,6 +31,7 @@ const CreateProposalPage: NextPageWithLayout = () => {
     CreateProblem(title, image, description);
   };
   const router = useRouter();
+
   function goToAllProposalPage() {
     setTimeout(() => {
       router.push(routes.problems);
@@ -38,6 +39,7 @@ const CreateProposalPage: NextPageWithLayout = () => {
   }
   useEffect(() => {
     if (!socket) return;
+
     socket.on('problem.created', async ({ problemId }) => {
       console.log(problemId);
       await axios.post(`/api/problem/${problemId}/upload-data`, {
