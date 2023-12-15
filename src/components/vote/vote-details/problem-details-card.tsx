@@ -15,7 +15,7 @@ import { ChevronDown } from '@/components/icons/chevron-down';
 import { useModal } from '@/components/modal-views/context';
 import axios from '@/lib/axios';
 import { ProblemSolverContext } from '@/context/ProblemSolverContext';
-
+import Image from '@/components/ui/image';
 export default function PropblemDetailCard({ problem }: any) {
   const [isExpand, setIsExpand] = useState(false);
   const { layout } = useLayout();
@@ -136,21 +136,51 @@ export default function PropblemDetailCard({ problem }: any) {
             exit="exit"
             variants={fadeInBottom('easeIn', 0.25, 16)}
           >
-            <div className="my-6 border-y border-dashed border-gray-200 py-6 text-gray-500 dark:border-gray-700 dark:text-gray-400">
-              Created by:{' '}
-              <a
-                href={'/'}
-                className="ml-1 inline-flex items-center gap-3 font-medium text-gray-900 hover:underline hover:opacity-90 focus:underline focus:opacity-90 dark:text-gray-100"
-              >
-                {problem.author.fullName} <ExportIcon className="h-auto w-3" />
-              </a>
+            <div className="my-6 flex flex-col gap-4 border-y border-dashed border-gray-200 py-6 text-gray-500 dark:border-gray-700 dark:text-gray-400">
+              <div className=" flex text-gray-500  dark:text-gray-400">
+                Created by:{' '}
+                <a
+                  href={'/'}
+                  className="ml-1 inline-flex items-center gap-3 font-medium text-gray-900 hover:underline hover:opacity-90 focus:underline focus:opacity-90 dark:text-gray-100"
+                >
+                  {problem.author.fullName}{' '}
+                  <ExportIcon className="h-auto w-3" />
+                </a>
+              </div>
+              <div className=" flex text-gray-500  dark:text-gray-400">
+                Wallet:{' '}
+                <a
+                  href={'/'}
+                  className="word-break-all ml-1 inline-flex items-center gap-3 font-medium font-medium leading-relaxed text-gray-900 hover:underline hover:opacity-90 focus:underline focus:opacity-90 dark:text-gray-100"
+                >
+                  {problem.author.address} <ExportIcon className="h-auto w-3" />
+                </a>
+              </div>
             </div>
+
             {/* Description */}
             <RevealContent defaultHeight={250}>
               <h4 className="mb-6 uppercase dark:text-gray-100">Description</h4>
               <div
                 className="dynamic-html grid gap-2 leading-relaxed text-gray-600 dark:text-gray-400"
                 dangerouslySetInnerHTML={{ __html: problem.description }}
+              />
+            </RevealContent>
+
+            {/* Image */}
+
+            <RevealContent
+              defaultHeight={320}
+              className="mt-6 border-t border-dashed border-gray-200 pt-6 dark:border-gray-700"
+            >
+              <h4 className="mb-6 uppercase dark:text-gray-100">Image</h4>
+
+              <Image
+                src={problem.image}
+                alt="wallet"
+                width={200}
+                height={200}
+                className=" rounded-lg"
               />
             </RevealContent>
             {/* Comment */}

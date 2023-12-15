@@ -14,23 +14,11 @@ import RootLayout from '@/layouts/_root-layout';
 import { useLayout } from '@/lib/hooks/use-layout';
 import { LAYOUT_OPTIONS } from '@/lib/constants';
 // Problems data
-import { AskifyVotes } from '@/data/static/problems-data';
 
 const ProposalsPage: NextPageWithLayout = () => {
   const router = useRouter();
   const { layout } = useLayout();
 
-  // getProblemsByStatus
-  function getProblemsByStatus(status: string) {
-    const votesByStatus = AskifyVotes.filter((vote) => vote.status === status);
-    return {
-      votes: votesByStatus,
-      totalProblems: votesByStatus.length,
-    };
-  }
-
-  const { totalProblems: totalActiveVote } = getProblemsByStatus('active');
-  const { totalProblems: totalPastVote } = getProblemsByStatus('past');
   function goToCreateProposalPage() {
     setTimeout(() => {
       router.push(routes.createProblem);
@@ -38,30 +26,12 @@ const ProposalsPage: NextPageWithLayout = () => {
   }
   const tabMenuItems = [
     {
-      title: (
-        <>
-          Waiting{' '}
-          {totalActiveVote > 0 && (
-            <span className="ltr:ml-0.5 rtl:mr-0.5 ltr:md:ml-1.5 rtl:md:mr-1.5 ltr:lg:ml-2 rtl:lg:mr-2">
-              {totalActiveVote}
-            </span>
-          )}
-        </>
-      ),
-      path: 'waiting',
+      title: <>Waiting </>,
+      path: 'preparing',
     },
 
     {
-      title: (
-        <>
-          In Progress{' '}
-          {totalActiveVote > 0 && (
-            <span className="ltr:ml-0.5 rtl:mr-0.5 ltr:md:ml-1.5 rtl:md:mr-1.5 ltr:lg:ml-2 rtl:lg:mr-2">
-              {totalActiveVote}
-            </span>
-          )}
-        </>
-      ),
+      title: <>In Progress </>,
       path: 'onprogress',
     },
 
@@ -69,11 +39,11 @@ const ProposalsPage: NextPageWithLayout = () => {
       title: (
         <>
           Solved{' '}
-          {totalPastVote > 0 && (
+          {/* {totalPastVote > 0 && (
             <span className="ltr:ml-0.5 rtl:mr-0.5 ltr:md:ml-1.5 rtl:md:mr-1.5 ltr:lg:ml-2 rtl:lg:mr-2">
               {totalPastVote}
             </span>
-          )}
+          )} */}
         </>
       ),
       path: 'solved',
@@ -121,7 +91,7 @@ const ProposalsPage: NextPageWithLayout = () => {
         </header>
         <ParamTab tabMenu={tabMenuItems}>
           <TabPanel className="focus:outline-none">
-            <ProblemsList status={'waiting'} />
+            <ProblemsList status={'preparing'} />
           </TabPanel>
 
           <TabPanel className="focus:outline-none">

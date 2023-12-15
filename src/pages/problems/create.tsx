@@ -1,5 +1,4 @@
 import type { NextPageWithLayout } from '@/types';
-import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import routes from '@/config/routes';
@@ -16,31 +15,43 @@ import RootLayout from '@/layouts/_root-layout';
 import InputLabel from '@/components/ui/input-label';
 import Uploader from '@/components/ui/forms/uploader';
 import UploaderIpfs from '@/components/ui/forms/uploaderIpfs';
-
+import { ProblemSolverContext } from '@/context/ProblemSolverContext';
+import { useContext, useEffect, useState } from 'react';
+import useSocket from '@/hooks/useSocket';
+import axios from '@/lib/axios';
 const CreateProposalPage: NextPageWithLayout = () => {
-  const [fileImage, setFileImage] = useState('');
+  const { address, CreateProblem } = useContext(ProblemSolverContext);
+  const { socket } = useSocket('problem');
+
+  const [image, setImage] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [problemData, setProblemData] = useState({
-    title: '',
-    description: '',
-    fileImage: '',
-  });
 
   const handleCreateProblem = () => {
-    setProblemData({
-      title: title,
-      description: description,
-      fileImage: fileImage,
-    });
+    CreateProblem(title, image, description);
   };
-
   const router = useRouter();
   function goToAllProposalPage() {
     setTimeout(() => {
       router.push(routes.problems);
     }, 800);
   }
+  useEffect(() => {
+    if (!socket) return;
+    socket.on('problem.created', async ({ problemId }) => {
+      console.log(problemId);
+      await axios.post(`/api/problem/${problemId}/upload-data`, {
+        title,
+        description,
+        image,
+      });
+      router.push(`/problems`);
+    });
+    return () => {
+      socket.off('problem.created');
+    };
+  }, [socket, title, description, image]);
+
   return (
     <>
       <NextSeo title="Create Problem" description="Askify " />
@@ -115,7 +126,7 @@ const CreateProposalPage: NextPageWithLayout = () => {
         <div className="mb-8">
           <InputLabel title="Upload Image" />
           {/* <Uploader /> */}
-          <UploaderIpfs setFileImage={setFileImage} />
+          <UploaderIpfs setFileImage={setImage} />
         </div>
         <div className="mt-6">
           <Button
