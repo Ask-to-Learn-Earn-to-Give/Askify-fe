@@ -80,9 +80,13 @@ export const ProblemSolverProvider = ({ children }) => {
   useEffect(() => {
     if (!address) return;
     const getUser = async () => {
-      const res = await axios.get(`/api/user?address=${address}`);
-      const { user } = res.data;
-      setUserData(user);
+      try {
+        const res = await axios.get(`/api/user?address=${address}`);
+        const { user } = res.data;
+        setUserData(user);
+      } catch (error) {
+        console.log('error', error);
+      }
     };
 
     getUser();
@@ -154,9 +158,13 @@ export const ProblemSolverProvider = ({ children }) => {
   };
   // fetch problem
   const fetchAllProblems = async () => {
-    const res = await axios.get('/api/problem?limit=100&skip=0');
-    const { problems } = res.data;
-    return problems;
+    try {
+      const res = await axios.get('/api/problem?limit=100&skip=0');
+      const { problems } = res.data;
+      return problems;
+    } catch (error) {
+      console.log('error', error);
+    }
   };
   // fetch all data from database
   useEffect(() => {
@@ -215,15 +223,23 @@ export const ProblemSolverProvider = ({ children }) => {
   };
   // function get all bidder
   const getProblemById = async (problemId) => {
-    const res = await axios.get(`/api/problem/${problemId}`);
-    const { problem } = res.data;
-    return problem;
+    try {
+      const res = await axios.get(`/api/problem/${problemId}`);
+      const { problem } = res.data;
+      return problem;
+    } catch (error) {
+      console.log('error', error);
+    }
   };
   // function get all bidder
   const getBidders = async (problemId) => {
-    const res = await axios.get(`/api/problem/${problemId}/bid`);
-    const { problemBids } = res.data;
-    return problemBids;
+    try {
+      const res = await axios.get(`/api/problem/${problemId}/bid`);
+      const { problemBids } = res.data;
+      return problemBids;
+    } catch (error) {
+      console.log('error', error);
+    }
   };
   const solvedProblem = async (_problemId, _expert) => {
     try {

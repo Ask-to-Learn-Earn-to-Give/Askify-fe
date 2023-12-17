@@ -39,20 +39,24 @@ const ConnectRoom = () => {
     if (!socket) return;
 
     async function fetchData() {
-      const { problem } = (await axios.get(`/api/problem/${problemId}`)).data;
-      const { chatGroup } = (
-        await axios.get(`/api/chat/${problem.chatGroupId}`)
-      ).data;
-      const { messages } = (
-        await axios.get(
-          `/api/chat/${problem.chatGroupId}/messages?skip=0&limit=1024`
-        )
-      ).data;
-      setProblem(problem);
-      setChatGroup(chatGroup);
-      setMessages(messages);
+      try {
+        const { problem } = (await axios.get(`/api/problem/${problemId}`)).data;
+        const { chatGroup } = (
+          await axios.get(`/api/chat/${problem.chatGroupId}`)
+        ).data;
+        const { messages } = (
+          await axios.get(
+            `/api/chat/${problem.chatGroupId}/messages?skip=0&limit=1024`
+          )
+        ).data;
+        setProblem(problem);
+        setChatGroup(chatGroup);
+        setMessages(messages);
 
-      socket?.emit('chat.user.join', { chatGroupId: problem.chatGroupId });
+        socket?.emit('chat.user.join', { chatGroupId: problem.chatGroupId });
+      } catch (error) {
+        console.log('error', error);
+      }
     }
     fetchData();
     socket?.on('chat.message.created', (message: any) => {

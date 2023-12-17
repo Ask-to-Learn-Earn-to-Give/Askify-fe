@@ -19,19 +19,27 @@ const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
   };
   // handle solve problem
   const handleSolverProblem = async () => {
-    const probId = getNumberFromName(chatGroup?.name);
-    if (probId && expertAddress) {
-      const solved = await solvedProblem(probId, expertAddress);
-    } else {
-      console.log('data missing');
+    try {
+      const probId = getNumberFromName(chatGroup?.name);
+      if (probId && expertAddress) {
+        const solved = await solvedProblem(probId, expertAddress);
+      } else {
+        console.log('data missing');
+      }
+    } catch (error) {
+      console.log('error', error);
     }
   };
   const handleUnSolverProblem = async () => {
-    const probId = getNumberFromName(chatGroup?.name);
-    if (probId) {
-      const unsolved = await unSolvedProblem(probId);
-    } else {
-      console.log('data missing');
+    try {
+      const probId = getNumberFromName(chatGroup?.name);
+      if (probId) {
+        const unsolved = await unSolvedProblem(probId);
+      } else {
+        console.log('data missing');
+      }
+    } catch (error) {
+      console.log('error', error);
     }
   };
   // get expert addrress:

@@ -23,6 +23,7 @@ const PreviewContent = dynamic(
 const BidPrice = dynamic(
   () => import('@/components/vote/vote-details/bid-price')
 );
+const Settings = dynamic(() => import('@/components/profile/settings'));
 
 function renderModalContent(view: MODAL_VIEW | string) {
   switch (view) {
@@ -42,6 +43,8 @@ function renderModalContent(view: MODAL_VIEW | string) {
       return <PreviewContent />;
     case 'BID_PRICE':
       return <BidPrice />;
+    case 'SETTINGS':
+      return <Settings />;
     default:
       return null;
   }

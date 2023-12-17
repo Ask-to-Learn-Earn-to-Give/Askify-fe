@@ -52,7 +52,11 @@ export default function CollectionCard({
     }
   };
   const getMessId = async (id: any) => {
-    await fetchData(id);
+    try {
+      await fetchData(id);
+    } catch (error) {
+      console.log('error');
+    }
   };
   return (
     <div

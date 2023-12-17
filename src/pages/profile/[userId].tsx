@@ -26,22 +26,28 @@ const Profile = () => {
     if (!userId) return;
 
     const getUser = async () => {
-      const res = await axios(`/api/user/${userId}`);
-      const { user } = res.data;
-      setUser(user);
+      try {
+        const res = await axios(`/api/user/${userId}`);
+        const { user } = res.data;
+        setUser(user);
+      } catch (error) {
+        console.log('error');
+      }
     };
     getUser();
   }, [userId]);
 
   const handleGetMyNft = async () => {
-    const data = await getMyNft();
-    setMyNftList(data);
+    try {
+      const data = await getMyNft();
+      setMyNftList(data);
+    } catch (error) {
+      console.log('error');
+    }
   };
   useEffect(() => {
     handleGetMyNft();
   }, []);
-  console.log('userData', userData);
-  console.log('myNftList', myNftList);
   // render default profile
   return (
     <>

@@ -60,9 +60,19 @@ export default function CreateNFT() {
 
   // mint NFTCard
   const handleMintNft = async () => {
-    if (!quantity || !name || !image || !problemsList?.chatGroupId || !price) {
-      console.log('data missing');
-    } else mintNft(quantity, name, image, problemsList?.chatGroupId, price);
+    try {
+      if (
+        !quantity ||
+        !name ||
+        !image ||
+        !problemsList?.chatGroupId ||
+        !price
+      ) {
+        console.log('data missing');
+      } else mintNft(quantity, name, image, problemsList?.chatGroupId, price);
+    } catch (error) {
+      console.log('error', error);
+    }
   };
   return (
     <>

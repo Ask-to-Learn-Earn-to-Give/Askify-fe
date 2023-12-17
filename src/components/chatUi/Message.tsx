@@ -53,6 +53,7 @@ const Message = ({
                 whiteSpace: 'pre-wrap',
                 wordWrap: 'break-word',
                 maxWidth: '80px',
+                color: 'gray',
               }}
             >
               <span style={{ fontWeight: 'bold' }}>{senderName}</span>
