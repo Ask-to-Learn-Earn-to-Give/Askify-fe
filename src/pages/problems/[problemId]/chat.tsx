@@ -56,8 +56,8 @@ const ConnectRoom = () => {
       socket?.emit('chat.user.join', { chatGroupId: problem.chatGroupId });
     }
     fetchData();
-    socket?.on('chat.message.created', ({ message }: any) => {
-      setMessages(({ messages }: any) => [...messages, message]);
+    socket?.on('chat.message.created', (message: any) => {
+      setMessages((messages: any) => [...messages, message]);
     });
     return () => {
       socket?.off('chat.message.created');

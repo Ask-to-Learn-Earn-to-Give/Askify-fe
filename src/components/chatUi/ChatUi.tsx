@@ -10,12 +10,12 @@ const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
   const boxRef = useRef(null);
   const router = useRouter();
   const currentId = (chatGroup?.members || []).find(
-    ({ address }: any) => address == address
+    ({ address: address_ }: any) => address == address_
   )?._id;
 
   const handleMessageSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    handleSubmit(messageInput);
+    handleSubmit({ message: messageInput });
     setMessageInput('');
   };
   // handle solve problem
@@ -65,7 +65,7 @@ const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
         className="h-[500px] max-h-[500px]  overflow-y-scroll  bg-gray-100 p-[30px]"
         ref={boxRef}
       >
-        {messages.map(({ message, index }: any) => {
+        {messages.map((message: any, index: any) => {
           const user = chatGroup.members.find(
             ({ _id }: any) => _id == message.senderId
           );
