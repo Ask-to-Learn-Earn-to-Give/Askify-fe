@@ -12,7 +12,6 @@ const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
   const currentId = (chatGroup?.members || []).find(
     ({ address: address_ }: any) => address == address_
   )?._id;
-
   const handleMessageSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     handleSubmit({ message: messageInput });
@@ -35,11 +34,11 @@ const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
       console.log('data missing');
     }
   };
-
   // get expert addrress:
   const expertAddress = (chatGroup?.members || []).find(
     ({ _id }: any) => _id !== chatGroup?.ownerId
   )?.address;
+
   // get problem ID
   function getNumberFromName({ name }: any) {
     var words = name?.split(' ') || '';

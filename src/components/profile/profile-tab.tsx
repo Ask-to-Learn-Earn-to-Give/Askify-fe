@@ -25,7 +25,12 @@ const tabMenu = [
   },
 ];
 
-export default function ProfileTab() {
+export default function ProfileTab({
+  myNftList,
+  userData,
+  setMessages,
+  setChatGroup,
+}: any) {
   const { layout } = useLayout();
   return (
     <ParamTab tabMenu={tabMenu}>
@@ -38,11 +43,15 @@ export default function ProfileTab() {
               : 'md:grid-cols-1'
           )}
         >
-          {collections?.map((collection) => (
-            <CollectionCard
-              item={collection}
-              key={`collection-key-${collection?.id}`}
-            />
+          {myNftList?.map((collection: any, index: number) => (
+            <div key={`collection-key-${myNftList?.image + index}`}>
+              <CollectionCard
+                item={collection}
+                userData={userData}
+                setMessages={setMessages}
+                setChatGroup={setChatGroup}
+              />
+            </div>
           ))}
         </div>
       </TabPanel>

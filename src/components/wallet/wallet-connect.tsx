@@ -10,6 +10,10 @@ import { useModal } from '@/components/modal-views/context';
 import { useContext } from 'react';
 import { useBalance } from 'wagmi';
 import { config } from '@/state/chain/config';
+import { useRouter } from 'next/router';
+import { ProblemSolverContext } from '@/context/ProblemSolverContext';
+import Image from '../ui/image';
+import avartar from '@/assets/images/avatar/2.png';
 export default function WalletConnect({
   btnClassName,
   anchorClassName,
@@ -25,7 +29,9 @@ export default function WalletConnect({
   const formattedBalance = data?.formatted
     ? Number(data?.formatted).toFixed(3)
     : '0.000';
+  const { userData } = useContext(ProblemSolverContext);
 
+  const router = useRouter();
   return (
     <>
       {address ? (
@@ -43,17 +49,35 @@ export default function WalletConnect({
               >
                 <Menu.Items className="absolute -right-20 mt-3 w-72 origin-top-right rounded-lg bg-white shadow-large dark:bg-gray-900 sm:-right-14">
                   <Menu.Item>
-                    <div className="border-b border-dashed border-gray-200 p-3 dark:border-gray-700">
-                      <ActiveLink
-                        href="/profile"
+                    <div className="cursor-pointer border-b border-dashed border-gray-200 p-3 dark:border-gray-700 ">
+                      <div
+                        onClick={() => router.push(`/profile/${userData._id}`)}
                         className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-900 transition hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800"
                       >
-                        <span className="h-8 w-8 rounded-full border-2 border-solid border-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 dark:border-gray-700"></span>
+                        {userData?.avatarUrl ? (
+                          <Image
+                            src={userData?.avatarUrl}
+                            className="object-cover"
+                            alt="Cover Image"
+                            width={40}
+                            height={40}
+                          />
+                        ) : (
+                          <Image
+                            src={avartar}
+                            className="object-cover"
+                            alt="Cover Image"
+                            width={40}
+                            height={40}
+                          />
+                        )}
+
+                        {/* <span className="h-8 w-8 rounded-full border-2 border-solid border-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 dark:border-gray-700"></span> */}
                         <span className="grow uppercase">
                           View Your Profile
                         </span>
                         <ChevronForward />
-                      </ActiveLink>
+                      </div>
                     </div>
                   </Menu.Item>
                   <Menu.Item>

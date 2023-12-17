@@ -21,10 +21,10 @@ export default function AuthorInformation({
       {/* Bio */}
       <div className="border-y border-dashed border-gray-200 py-5 dark:border-gray-700 xl:py-6">
         <div className="mb-2 text-sm font-medium uppercase tracking-wider text-gray-900 dark:text-white">
-          Bio
+          Description
         </div>
         <div className="text-sm leading-6 tracking-tighter text-gray-600 dark:text-gray-400">
-          {data?.bio}
+          {data?.description}
         </div>
       </div>
 

@@ -33,7 +33,6 @@ const ConnectRoom = () => {
       chatGroupId: problem?.chatGroupId,
       content: message,
     });
-    console.log('message', message);
   };
   useEffect(() => {
     if (!problemId) return;

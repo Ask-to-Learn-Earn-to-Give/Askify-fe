@@ -307,14 +307,13 @@ export const ProblemSolverProvider = ({ children }) => {
           }
         })
       );
-      console.log('data', items);
 
       return items;
     } catch (error) {
       console.log('error', error);
     }
   };
-
+  getMyNft();
   return (
     <ProblemSolverContext.Provider
       value={{

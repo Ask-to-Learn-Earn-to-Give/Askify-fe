@@ -53,11 +53,7 @@ export const menuItems = [
       },
     ],
   },
-  {
-    name: 'Profile',
-    icon: <ProfileIcon />,
-    href: routes.profile,
-  },
+
   {
     name: 'Connect Room',
     icon: <ExchangeIcon />,
