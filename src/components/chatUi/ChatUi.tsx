@@ -5,19 +5,19 @@ import Button from '../ui/button/button';
 import { useRouter } from 'next/router';
 const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
   const [messageInput, setMessageInput] = useState('');
-  const { currentAccount, solvedProblem, unSolvedProblem } =
+  const { address, solvedProblem, unSolvedProblem } =
     useContext(ProblemSolverContext);
   const boxRef = useRef(null);
   const router = useRouter();
   const currentId = (chatGroup?.members || []).find(
-    ({ address }: any) => address == currentAccount
+    ({ address: address_ }: any) => address == address_
   )?._id;
 
-  const handleMessageSubmit = () => {
-    // handleSubmit(messageInput);
+  const handleMessageSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    handleSubmit({ message: messageInput });
     setMessageInput('');
   };
-  console.log('messageInput', messageInput);
   // handle solve problem
   const handleSolverProblem = async () => {
     const probId = getNumberFromName(chatGroup?.name);
@@ -52,19 +52,20 @@ const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
   }
   const handleKeyPress = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
-      handleMessageSubmit();
+      handleMessageSubmit(event);
     }
   };
   const handleCreate = () => {
     router.push('/nft/create-nft');
   };
+
   return (
     <div>
       <div
         className="h-[500px] max-h-[500px]  overflow-y-scroll  bg-gray-100 p-[30px]"
         ref={boxRef}
       >
-        {messages.map(({ message, index }: any) => {
+        {messages.map((message: any, index: any) => {
           const user = chatGroup.members.find(
             ({ _id }: any) => _id == message.senderId
           );
@@ -82,10 +83,7 @@ const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
 
       <form
         className="mt-[20px]  h-[100px]  w-full"
-        onSubmit={(event) => {
-          event.preventDefault();
-          handleMessageSubmit();
-        }}
+        onSubmit={handleMessageSubmit}
       >
         <div>
           <input
@@ -98,8 +96,8 @@ const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
             }}
             value={messageInput}
             onChange={(event) => setMessageInput(event.target.value)}
-            onKeyPress={handleKeyPress}
             placeholder="Type a message..."
+            onKeyPress={handleKeyPress}
           />
         </div>
 

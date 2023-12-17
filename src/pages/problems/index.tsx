@@ -27,7 +27,7 @@ const ProposalsPage: NextPageWithLayout = () => {
   const tabMenuItems = [
     {
       title: <>Waiting </>,
-      path: 'preparing',
+      path: 'waiting',
     },
 
     {
@@ -91,7 +91,7 @@ const ProposalsPage: NextPageWithLayout = () => {
         </header>
         <ParamTab tabMenu={tabMenuItems}>
           <TabPanel className="focus:outline-none">
-            <ProblemsList status={'preparing'} />
+            <ProblemsList status={'waiting'} />
           </TabPanel>
 
           <TabPanel className="focus:outline-none">
