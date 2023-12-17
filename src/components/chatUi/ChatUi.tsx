@@ -5,19 +5,19 @@ import Button from '../ui/button/button';
 import { useRouter } from 'next/router';
 const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
   const [messageInput, setMessageInput] = useState('');
-  const { currentAccount, solvedProblem, unSolvedProblem } =
+  const { address, solvedProblem, unSolvedProblem } =
     useContext(ProblemSolverContext);
   const boxRef = useRef(null);
   const router = useRouter();
   const currentId = (chatGroup?.members || []).find(
-    ({ address }: any) => address == currentAccount
+    ({ address }: any) => address == address
   )?._id;
 
-  const handleMessageSubmit = () => {
-    // handleSubmit(messageInput);
+  const handleMessageSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    handleSubmit(messageInput);
     setMessageInput('');
   };
-  console.log('messageInput', messageInput);
   // handle solve problem
   const handleSolverProblem = async () => {
     const probId = getNumberFromName(chatGroup?.name);
@@ -52,12 +52,13 @@ const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
   }
   const handleKeyPress = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
-      handleMessageSubmit();
+      handleMessageSubmit(event);
     }
   };
   const handleCreate = () => {
     router.push('/nft/create-nft');
   };
+
   return (
     <div>
       <div
@@ -82,10 +83,7 @@ const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
 
       <form
         className="mt-[20px]  h-[100px]  w-full"
-        onSubmit={(event) => {
-          event.preventDefault();
-          handleMessageSubmit();
-        }}
+        onSubmit={handleMessageSubmit}
       >
         <div>
           <input
@@ -98,8 +96,8 @@ const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
             }}
             value={messageInput}
             onChange={(event) => setMessageInput(event.target.value)}
-            onKeyPress={handleKeyPress}
             placeholder="Type a message..."
+            onKeyPress={handleKeyPress}
           />
         </div>
 

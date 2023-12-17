@@ -195,22 +195,9 @@ export default function PropblemDetailCard({ problem }: any) {
               />
             </RevealContent>
 
-            {problem.status !== 'waiting' &&
-              (address == problem.author.address ||
-                address == problem.expert.address) && (
-                <div className="mt-4 flex items-center gap-3 xs:mt-6 xs:inline-flex md:mt-10">
-                  <Button
-                    shape="rounded"
-                    className="flex-1 xs:flex-auto"
-                    onClick={() => {}}
-                  >
-                    Chat
-                  </Button>
-                </div>
-              )}
             {problem.status === 'waiting' &&
             address != problem.author.address ? (
-              <div className="mt-4 flex items-center gap-3 xs:mt-6 xs:inline-flex md:mt-10">
+              <div className="mt-4 flex w-[200px] items-center gap-3 xs:mt-6 xs:inline-flex md:mt-10">
                 <Button
                   shape="rounded"
                   className="flex-1 xs:flex-auto"

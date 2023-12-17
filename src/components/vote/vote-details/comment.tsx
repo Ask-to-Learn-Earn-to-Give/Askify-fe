@@ -3,9 +3,11 @@ import Button from '@/components/ui/button';
 import { ProblemSolverContext } from '@/context/ProblemSolverContext';
 import { useContext, useState } from 'react';
 import Web3 from 'web3';
+import { useRouter } from 'next/router';
 
 export default function Comment({ title, bids, problem }: any) {
   const { address, selectedExpert } = useContext(ProblemSolverContext);
+  const router = useRouter();
 
   const handleSelected = async ({
     problemOnchainId,
@@ -18,13 +20,14 @@ export default function Comment({ title, bids, problem }: any) {
       value
     );
   };
-
+  console.log('bids', bids);
+  console.log('problem', problem);
   return (
     <>
       <h4 className="mb-6 uppercase dark:text-gray-100">{title}</h4>
       {bids?.map((item: any, index: number) => (
         <div key={item._id} className="mt-6">
-          <div className="my-6 flex items-start gap-3 border-y border-dashed border-gray-200 py-4 text-gray-500 dark:border-gray-700 dark:text-gray-400">
+          <div className="my-6 flex items-start gap-3 border-t border-dashed border-gray-200 py-4 text-gray-500 dark:border-gray-700 dark:text-gray-400">
             <span className="shrink-0 text-gray-600 dark:text-gray-400">
               {index + 1}
             </span>
@@ -82,7 +85,7 @@ export default function Comment({ title, bids, problem }: any) {
                         value: item.amount,
                       })
                     }
-                    className="w-200 mt-1 xs:mt-2 xs:w-auto md:mt-4"
+                    className="mt-1 w-[200px] xs:mt-2 xs:w-auto md:mt-4"
                     shape="rounded"
                     variant="ghost"
                   >
@@ -90,16 +93,25 @@ export default function Comment({ title, bids, problem }: any) {
                   </Button>
                 </div>
               ) : (
-                <div className="flex flex-row">
-                  <Button
-                    // onClick={}
-                    className="w-200 mt-1 xs:mt-2 xs:w-auto md:mt-4"
-                    shape="rounded"
-                    variant="ghost"
-                  >
-                    View Infomation
-                  </Button>
-                </div>
+                problem.status !== 'waiting' &&
+                problem.expert?.address.toString().toLowerCase() ==
+                  item.expert?.address &&
+                (address?.toString().toLowerCase() ==
+                  problem.author.address?.toString().toLowerCase() ||
+                  address?.toString().toLowerCase() ==
+                    problem.expert.address?.toString().toLowerCase()) && (
+                  <div className="mt-4 flex w-[200px] items-center gap-3 xs:mt-6 xs:inline-flex md:mt-10">
+                    <Button
+                      shape="rounded"
+                      className="flex-1 xs:flex-auto"
+                      onClick={() =>
+                        router.push(`/problems/${problem._id}/chat`)
+                      }
+                    >
+                      Chat
+                    </Button>
+                  </div>
+                )
               )}
             </div>
           </div>
