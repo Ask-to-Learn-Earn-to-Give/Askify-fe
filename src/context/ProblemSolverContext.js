@@ -152,6 +152,9 @@ export const ProblemSolverProvider = ({ children }) => {
         description
       );
       await transaction.wait();
+      if (transaction) {
+        router.push(`/problems`);
+      }
     } catch (error) {
       console.log('error', error);
     }
@@ -293,43 +296,44 @@ export const ProblemSolverProvider = ({ children }) => {
     }
   };
   const getMyNft = async () => {
-    try {
-      const contract = await connectingWithSmartContractMint();
-      const data = await contract.getMyNFTs();
-      const items = await Promise.all(
-        data.map(async ({ tokenId, tokenURI }) => {
-          try {
-            const tokenURIs = await contract.tokenURI(tokenId);
-            const {
-              data: { name, image, key, price },
-            } = await NormalAxios.get(tokenURIs);
+    if (address) {
+      try {
+        const contract = await connectingWithSmartContractMint();
+        const data = await contract.getMyNFTs();
+        const items = await Promise.all(
+          data.map(async ({ tokenId, tokenURI }) => {
+            try {
+              const tokenURIs = await contract.tokenURI(tokenId);
+              const {
+                data: { name, image, key, price },
+              } = await NormalAxios.get(tokenURIs);
 
-            // Ensure IPFS data is available
-            if (!name || !image || !key) {
-              console.log(`Error fetching IPFS data for NFT ${tokenId}`);
+              // Ensure IPFS data is available
+              if (!name || !image || !key) {
+                console.log(`Error fetching IPFS data for NFT ${tokenId}`);
+                return null;
+              }
+
+              return {
+                tokenId: tokenId.toString(),
+                name,
+                image,
+                key,
+                price: price.toString(),
+              };
+            } catch (error) {
+              console.log(`Error fetching data for NFT ${tokenId}:`, error);
               return null;
             }
+          })
+        );
 
-            return {
-              tokenId: tokenId.toString(),
-              name,
-              image,
-              key,
-              price: price.toString(),
-            };
-          } catch (error) {
-            console.log(`Error fetching data for NFT ${tokenId}:`, error);
-            return null;
-          }
-        })
-      );
-
-      return items;
-    } catch (error) {
-      console.log('error', error);
+        return items;
+      } catch (error) {
+        console.log('error', error);
+      }
     }
   };
-  getMyNft();
   return (
     <ProblemSolverContext.Provider
       value={{

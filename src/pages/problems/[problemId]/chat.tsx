@@ -66,7 +66,6 @@ const ConnectRoom = () => {
       socket?.off('chat.message.created');
     };
   }, [problemId, socket]);
-
   return (
     <>
       <NextSeo title="Connect Room" description="Askify " />
@@ -77,6 +76,7 @@ const ConnectRoom = () => {
             chatGroup={chatGroup}
             messages={messages}
             handleSubmit={handleSubmit}
+            problem={problem}
           />
         </div>
       </div>

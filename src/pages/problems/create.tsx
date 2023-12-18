@@ -47,7 +47,7 @@ const CreateProposalPage: NextPageWithLayout = () => {
         description,
         image,
       });
-      router.push(`/problems`);
+      // router.push(`/problems`);
     });
     return () => {
       socket.off('problem.created');

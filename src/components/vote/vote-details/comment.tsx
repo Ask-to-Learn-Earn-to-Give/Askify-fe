@@ -89,7 +89,7 @@ export default function Comment({ title, bids, problem }: any) {
                     }
                     className="mt-1 w-[200px] xs:mt-2 xs:w-auto md:mt-4"
                     shape="rounded"
-                    variant="ghost"
+                    // variant="ghost"
                   >
                     Select
                   </Button>
