@@ -10,7 +10,6 @@ const routes = {
   problems: '/problems',
   createProblem: '/problems/create',
   charts: '/charts',
-  profile: '/profile',
   portfolio: '/profile?view=portfolio',
   history: '/profile?view=history',
   classic: '/classic',

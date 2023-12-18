@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import cn from 'classnames';
 import { NextSeo } from 'next-seo';
 import { Transition } from '@/components/ui/transition';
 import { Listbox } from '@/components/ui/listbox';
 import Image from '@/components/ui/image';
+
 import Button from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import Input from '@/components/ui/forms/input';
@@ -18,24 +19,61 @@ import Preview from '@/components/create-nft/nft-preview';
 import AuthorImage from '@/assets/images/author.jpg';
 import NFT1 from '@/assets/images/nft/nft-1.jpg';
 import PriceType from '@/components/create-nft/price-types-props';
-
-const ProblemsList = [
-  {
-    id: 1,
-    name: 'Problems 1',
-    value: 'ethereum',
-  },
-  {
-    id: 2,
-    name: 'Problems 2',
-    value: 'flow',
-  },
-];
+import useSocket from '@/hooks/useSocket';
+import { useRouter } from 'next/router';
+import axios from '@/lib/axios';
+import { useAccount } from 'wagmi';
+import { ProblemSolverContext } from '@/context/ProblemSolverContext';
+import UploaderIpfs from '@/components/ui/forms/uploaderIpfs';
 
 export default function CreateNFT() {
+  const { address, mintNft, userData } = useContext(ProblemSolverContext);
+  const router = useRouter();
   let [publish, setPublish] = useState(true);
   let [priceType, setPriceType] = useState('fixed');
-  let [problems, setProblems] = useState(ProblemsList[0]);
+  const [allProblems, setAllProblems] = useState<any>([]);
+  const { address: address_ } = useAccount();
+  const [problemsList, setProblemsList] = useState<any>([]);
+  //
+  const [quantity, setQuantity] = useState(1);
+  const [price, setPrice] = useState('');
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [image, setImage] = useState('');
+  useEffect(() => {
+    async function getProblems() {
+      const {
+        data: { problems },
+      } = await axios.get('/api/problem?skip=0&limit=100');
+      setAllProblems(problems);
+    }
+
+    getProblems();
+  }, []);
+  const problemsChatGroupId: any = useMemo(() => {
+    return allProblems.filter(
+      (prop: any) =>
+        prop.author?.address.toString().toLowerCase() ===
+          address_?.toString().toLowerCase() && prop.expert !== undefined
+    );
+  }, [allProblems, address_]);
+
+  // mint NFTCard
+  const handleMintNft = async () => {
+    try {
+      if (
+        !quantity ||
+        !name ||
+        !image ||
+        !problemsList?.chatGroupId ||
+        !price
+      ) {
+        console.log('data missing');
+      } else mintNft(quantity, name, image, problemsList?.chatGroupId, price);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
   return (
     <>
       <NextSeo title="Create NFT" description="Askify " />
@@ -45,7 +83,6 @@ export default function CreateNFT() {
             <h2 className="text-lg font-medium uppercase tracking-wider text-gray-900 dark:text-white  sm:text-2xl">
               Create New Item
             </h2>
-            <Preview />
           </div>
         </div>
         <div className="mb-8 grid grid-cols-1 gap-12 lg:grid-cols-3">
@@ -53,7 +90,7 @@ export default function CreateNFT() {
             {/* File uploader */}
             <div className="mb-8">
               <InputLabel title="Upload file" important />
-              <Uploader />
+              <UploaderIpfs setFileImage={setImage} />
             </div>
 
             {/* NFT price type */}
@@ -92,29 +129,51 @@ export default function CreateNFT() {
             <InputLabel title="Preview" />
             <div className="relative flex flex-grow flex-col overflow-hidden rounded-lg bg-white shadow-card transition-all duration-200 hover:shadow-large dark:bg-light-dark">
               <div className="flex items-center p-4 text-sm font-medium text-gray-600 transition hover:text-gray-900 dark:text-gray-400">
-                <Avatar
-                  size="sm"
-                  image={AuthorImage}
-                  alt="Askif"
-                  className="border-white bg-gray-300 ltr:mr-3 rtl:ml-3 dark:bg-gray-400"
-                />
-                @Askify
+                {userData?.avatarUrl ? (
+                  <Avatar
+                    size="sm"
+                    width={40}
+                    height={40}
+                    image={userData?.avatarUrl}
+                    alt="user data Avatar"
+                    className="border-white bg-gray-300 ltr:mr-3 rtl:ml-3 dark:bg-gray-400"
+                  />
+                ) : (
+                  <Avatar
+                    size="sm"
+                    image={AuthorImage}
+                    alt="Askif"
+                    className="border-white bg-gray-300 ltr:mr-3 rtl:ml-3 dark:bg-gray-400"
+                  />
+                )}
+                @{userData?.fullName ? userData?.fullName : userData?.address}
               </div>
               <div className="relative block w-full">
-                <Image
-                  src={NFT1}
-                  placeholder="blur"
-                  width={700}
-                  height={700}
-                  alt="Pulses of Imagination #214"
-                />
+                {image ? (
+                  <Image
+                    src={image}
+                    placeholder="blur"
+                    blurDataURL="data:image/jpeg;base64,..."
+                    width={700}
+                    height={700}
+                    alt="nft image"
+                  />
+                ) : (
+                  <Image
+                    src={NFT1}
+                    placeholder="blur"
+                    width={700}
+                    height={700}
+                    alt="Pulses of Imagination #214"
+                  />
+                )}
               </div>
               <div className="p-5">
                 <div className="text-sm font-medium text-black dark:text-white">
-                  Pulses Of Imagination #214
+                  {name ? name : ' Pulses Of Imagination #214'}
                 </div>
                 <div className="mt-4 text-lg font-medium text-gray-900 dark:text-white">
-                  0.40 ETH
+                  {price ? price : '100'} Klay
                 </div>
               </div>
             </div>
@@ -129,13 +188,18 @@ export default function CreateNFT() {
             type="number"
             placeholder="Enter your price"
             inputClassName="spin-button-hidden"
+            onChange={(e) => setPrice(e.target.value)}
           />
         </div>
 
         {/* Name */}
         <div className="mb-8">
           <InputLabel title="Name" important />
-          <Input type="text" placeholder="Item name" />
+          <Input
+            type="text"
+            placeholder="Item name"
+            onChange={(e) => setName(e.target.value)}
+          />
         </div>
 
         {/* Description */}
@@ -144,7 +208,10 @@ export default function CreateNFT() {
             title="Description"
             subTitle="The description will be included on the item's detail page underneath its image."
           />
-          <Textarea placeholder="Provide a detailed description of your item" />
+          <Textarea
+            placeholder="Provide a detailed description of your item"
+            onChange={(e) => setDescription(e.target.value)}
+          />
         </div>
 
         {/* Supply */}
@@ -160,9 +227,12 @@ export default function CreateNFT() {
         <div className="mb-8">
           <InputLabel title="Problems" />
           <div className="relative">
-            <Listbox value={problems} onChange={setProblems}>
+            <Listbox
+              value={problemsChatGroupId}
+              onChange={(value) => setProblemsList(value)}
+            >
               <Listbox.Button className="text-case-inherit letter-space-inherit flex h-10 w-full items-center justify-between rounded-lg border border-gray-200 bg-white px-4 text-sm font-medium text-gray-900 outline-none transition-shadow duration-200 hover:border-gray-900 hover:ring-1 hover:ring-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:border-gray-600 dark:hover:ring-gray-600 sm:h-12 sm:px-5">
-                <div className="flex items-center">{problems.name}</div>
+                <div className="flex items-center">{problemsList?.title}</div>
                 <ChevronDown />
               </Listbox.Button>
               <Transition
@@ -171,8 +241,8 @@ export default function CreateNFT() {
                 leaveTo="opacity-0"
               >
                 <Listbox.Options className="absolute left-0 z-10 mt-1 grid w-full origin-top-right gap-0.5 rounded-lg border border-gray-200 bg-white p-1 shadow-large outline-none dark:border-gray-700 dark:bg-gray-800 xs:p-2">
-                  {ProblemsList.map((option) => (
-                    <Listbox.Option key={option.id} value={option}>
+                  {problemsChatGroupId.map((option: any) => (
+                    <Listbox.Option key={option?.chatGroupId} value={option}>
                       {({ selected }) => (
                         <div
                           className={`flex cursor-pointer items-center rounded-md px-3 py-2 text-sm text-gray-900 transition dark:text-gray-100  ${
@@ -181,7 +251,7 @@ export default function CreateNFT() {
                               : 'hover:bg-gray-100 dark:hover:bg-gray-700/70'
                           }`}
                         >
-                          {option.name}
+                          {option?.title}
                         </div>
                       )}
                     </Listbox.Option>
@@ -192,7 +262,9 @@ export default function CreateNFT() {
           </div>
         </div>
 
-        <Button shape="rounded">CREATE</Button>
+        <Button onClick={handleMintNft} shape="rounded">
+          CREATE
+        </Button>
       </div>
     </>
   );

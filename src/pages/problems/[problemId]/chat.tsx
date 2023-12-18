@@ -33,27 +33,30 @@ const ConnectRoom = () => {
       chatGroupId: problem?.chatGroupId,
       content: message,
     });
-    console.log('message', message);
   };
   useEffect(() => {
     if (!problemId) return;
     if (!socket) return;
 
     async function fetchData() {
-      const { problem } = (await axios.get(`/api/problem/${problemId}`)).data;
-      const { chatGroup } = (
-        await axios.get(`/api/chat/${problem.chatGroupId}`)
-      ).data;
-      const { messages } = (
-        await axios.get(
-          `/api/chat/${problem.chatGroupId}/messages?skip=0&limit=1024`
-        )
-      ).data;
-      setProblem(problem);
-      setChatGroup(chatGroup);
-      setMessages(messages);
+      try {
+        const { problem } = (await axios.get(`/api/problem/${problemId}`)).data;
+        const { chatGroup } = (
+          await axios.get(`/api/chat/${problem.chatGroupId}`)
+        ).data;
+        const { messages } = (
+          await axios.get(
+            `/api/chat/${problem.chatGroupId}/messages?skip=0&limit=1024`
+          )
+        ).data;
+        setProblem(problem);
+        setChatGroup(chatGroup);
+        setMessages(messages);
 
-      socket?.emit('chat.user.join', { chatGroupId: problem.chatGroupId });
+        socket?.emit('chat.user.join', { chatGroupId: problem.chatGroupId });
+      } catch (error) {
+        console.log('error', error);
+      }
     }
     fetchData();
     socket?.on('chat.message.created', (message: any) => {
@@ -63,7 +66,6 @@ const ConnectRoom = () => {
       socket?.off('chat.message.created');
     };
   }, [problemId, socket]);
-
   return (
     <>
       <NextSeo title="Connect Room" description="Askify " />
@@ -74,6 +76,7 @@ const ConnectRoom = () => {
             chatGroup={chatGroup}
             messages={messages}
             handleSubmit={handleSubmit}
+            problem={problem}
           />
         </div>
       </div>

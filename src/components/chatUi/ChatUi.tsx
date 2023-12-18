@@ -3,7 +3,7 @@ import Message from './Message';
 import { ProblemSolverContext } from '@/context/ProblemSolverContext';
 import Button from '../ui/button/button';
 import { useRouter } from 'next/router';
-const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
+const ChatUi = ({ chatGroup, messages, handleSubmit, problem }: any) => {
   const [messageInput, setMessageInput] = useState('');
   const { address, solvedProblem, unSolvedProblem } =
     useContext(ProblemSolverContext);
@@ -12,30 +12,41 @@ const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
   const currentId = (chatGroup?.members || []).find(
     ({ address: address_ }: any) => address == address_
   )?._id;
-
   const handleMessageSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     handleSubmit({ message: messageInput });
     setMessageInput('');
   };
+
   // handle solve problem
   const handleSolverProblem = async () => {
-    const probId = getNumberFromName(chatGroup?.name);
+    const probId = extractNumber(chatGroup?.name);
+
     if (probId && expertAddress) {
       const solved = await solvedProblem(probId, expertAddress);
     } else {
       console.log('data missing');
     }
   };
+  function extractNumber(str: any) {
+    const regex = /\d+/g;
+    const matches = str.match(regex);
+    if (matches && matches.length > 0) {
+      return parseInt(matches[0]);
+    } else {
+      return null;
+    }
+  }
+
   const handleUnSolverProblem = async () => {
-    const probId = getNumberFromName(chatGroup?.name);
+    const probId = extractNumber(chatGroup?.name);
+
     if (probId) {
       const unsolved = await unSolvedProblem(probId);
     } else {
       console.log('data missing');
     }
   };
-
   // get expert addrress:
   const expertAddress = (chatGroup?.members || []).find(
     ({ _id }: any) => _id !== chatGroup?.ownerId
@@ -71,11 +82,11 @@ const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
           );
           return (
             <Message
-              key={message._id}
-              content={message.content}
-              senderName={user.fullName}
-              senderAvatar={user.avatarUrl}
-              sentByCurrentUser={message.senderId == currentId}
+              key={message?._id}
+              content={message?.content}
+              senderName={user?.fullName}
+              senderAvatar={user?.avatarUrl}
+              sentByCurrentUser={message?.senderId == currentId}
             />
           );
         })}
@@ -93,6 +104,7 @@ const ChatUi = ({ chatGroup, messages, handleSubmit }: any) => {
               whiteSpace: 'pre-wrap',
               wordWrap: 'break-word',
               overflowWrap: 'break-word',
+              color: 'gray',
             }}
             value={messageInput}
             onChange={(event) => setMessageInput(event.target.value)}

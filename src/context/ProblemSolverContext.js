@@ -80,9 +80,13 @@ export const ProblemSolverProvider = ({ children }) => {
   useEffect(() => {
     if (!address) return;
     const getUser = async () => {
-      const res = await axios.get(`/api/user?address=${address}`);
-      const { user } = res.data;
-      setUserData(user);
+      try {
+        const res = await axios.get(`/api/user?address=${address}`);
+        const { user } = res.data;
+        setUserData(user);
+      } catch (error) {
+        console.log('error', error);
+      }
     };
 
     getUser();
@@ -148,15 +152,22 @@ export const ProblemSolverProvider = ({ children }) => {
         description
       );
       await transaction.wait();
+      if (transaction) {
+        router.push(`/problems`);
+      }
     } catch (error) {
       console.log('error', error);
     }
   };
   // fetch problem
   const fetchAllProblems = async () => {
-    const res = await axios.get('/api/problem?limit=100&skip=0');
-    const { problems } = res.data;
-    return problems;
+    try {
+      const res = await axios.get('/api/problem?limit=100&skip=0');
+      const { problems } = res.data;
+      return problems;
+    } catch (error) {
+      console.log('error', error);
+    }
   };
   // fetch all data from database
   useEffect(() => {
@@ -215,15 +226,23 @@ export const ProblemSolverProvider = ({ children }) => {
   };
   // function get all bidder
   const getProblemById = async (problemId) => {
-    const res = await axios.get(`/api/problem/${problemId}`);
-    const { problem } = res.data;
-    return problem;
+    try {
+      const res = await axios.get(`/api/problem/${problemId}`);
+      const { problem } = res.data;
+      return problem;
+    } catch (error) {
+      console.log('error', error);
+    }
   };
   // function get all bidder
   const getBidders = async (problemId) => {
-    const res = await axios.get(`/api/problem/${problemId}/bid`);
-    const { problemBids } = res.data;
-    return problemBids;
+    try {
+      const res = await axios.get(`/api/problem/${problemId}/bid`);
+      const { problemBids } = res.data;
+      return problemBids;
+    } catch (error) {
+      console.log('error', error);
+    }
   };
   const solvedProblem = async (_problemId, _expert) => {
     try {
@@ -277,44 +296,44 @@ export const ProblemSolverProvider = ({ children }) => {
     }
   };
   const getMyNft = async () => {
-    try {
-      const contract = await connectingWithSmartContractMint();
-      const data = await contract.getMyNFTs();
-      const items = await Promise.all(
-        data.map(async ({ tokenId, tokenURI }) => {
-          try {
-            const tokenURIs = await contract.tokenURI(tokenId);
-            const {
-              data: { name, image, key, price },
-            } = await NormalAxios.get(tokenURIs);
+    if (address) {
+      try {
+        const contract = await connectingWithSmartContractMint();
+        const data = await contract.getMyNFTs();
+        const items = await Promise.all(
+          data.map(async ({ tokenId, tokenURI }) => {
+            try {
+              const tokenURIs = await contract.tokenURI(tokenId);
+              const {
+                data: { name, image, key, price },
+              } = await NormalAxios.get(tokenURIs);
 
-            // Ensure IPFS data is available
-            if (!name || !image || !key) {
-              console.log(`Error fetching IPFS data for NFT ${tokenId}`);
+              // Ensure IPFS data is available
+              if (!name || !image || !key) {
+                console.log(`Error fetching IPFS data for NFT ${tokenId}`);
+                return null;
+              }
+
+              return {
+                tokenId: tokenId.toString(),
+                name,
+                image,
+                key,
+                price: price.toString(),
+              };
+            } catch (error) {
+              console.log(`Error fetching data for NFT ${tokenId}:`, error);
               return null;
             }
+          })
+        );
 
-            return {
-              tokenId: tokenId.toString(),
-              name,
-              image,
-              key,
-              price: price.toString(),
-            };
-          } catch (error) {
-            console.log(`Error fetching data for NFT ${tokenId}:`, error);
-            return null;
-          }
-        })
-      );
-      console.log('data', items);
-
-      return items;
-    } catch (error) {
-      console.log('error', error);
+        return items;
+      } catch (error) {
+        console.log('error', error);
+      }
     }
   };
-
   return (
     <ProblemSolverContext.Provider
       value={{

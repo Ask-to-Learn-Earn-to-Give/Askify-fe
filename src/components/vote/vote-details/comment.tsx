@@ -14,14 +14,16 @@ export default function Comment({ title, bids, problem }: any) {
     problemBidOnchainId,
     value,
   }: any) => {
-    const selected = await selectedExpert(
-      problemOnchainId,
-      problemBidOnchainId,
-      value
-    );
+    try {
+      const selected = await selectedExpert(
+        problemOnchainId,
+        problemBidOnchainId,
+        value
+      );
+    } catch (error) {
+      console.log('error', error);
+    }
   };
-  console.log('bids', bids);
-  console.log('problem', problem);
   return (
     <>
       <h4 className="mb-6 uppercase dark:text-gray-100">{title}</h4>
@@ -87,7 +89,7 @@ export default function Comment({ title, bids, problem }: any) {
                     }
                     className="mt-1 w-[200px] xs:mt-2 xs:w-auto md:mt-4"
                     shape="rounded"
-                    variant="ghost"
+                    // variant="ghost"
                   >
                     Select
                   </Button>
